@@ -45,11 +45,23 @@ function renderTask() {
   const description = document.createElement('textarea');
   description.dataset.info = 'description';
 
+  renderTaskStatus(status, title);
   linkTask(title, description);
+
   details.append(description);
   task.append(status, title, details);
 
   parent.append(task);
+}
+
+function renderTaskStatus(status, title) {
+  status.addEventListener('change', () => {
+    if (status.checked) {
+      title.classList.toggle('completed');
+    } else {
+      title.classList.toggle('completed');
+    }
+  })
 }
 
 // only for creating a new element
@@ -79,10 +91,10 @@ function pushTask(task, project) {
 
 // only adds a listener
 function createTaskListener(source, obj) {
-  source.onchange = () => {
+  source.addEventListener('change', () => {
     obj[source.dataset.info] = source.value;
     console.log(project)
-  };
+  });
 }
 
 getNewTaskBtn();
