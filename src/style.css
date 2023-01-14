@@ -1,12 +1,13 @@
 :root {
     font-family: Lato, sans-serif;
 
-
     --clr-dark: #2d2d2d;
     --fs-default: 1rem;
     --fs-500: 1.15rem;
     --fs-600: 1.75rem;
 }
+
+/* Utilities */
 
 .flex {
     display: flex;
@@ -36,6 +37,8 @@ body {
 .fs-600 {
     font-size: var(--fs-600);
 }
+
+/* Components */
 
 .tasks-container {
     background-color: white;
@@ -69,6 +72,7 @@ body {
     font-family: Poppins, sans-serif !important;
     border: none;
     outline: none;
+    caret-color: transparent;
 }
 
 .task input::selection {

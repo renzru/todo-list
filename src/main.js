@@ -36,8 +36,9 @@ function renderTask() {
   status.dataset.info = 'status';
   status.type = 'checkbox';
 
-  const title = document.createElement('input');
+  const title = newElement('input', 'fs-500');
   title.dataset.info = 'title';
+  title.placeholder = 'Todo';
 
   const details = document.createElement('div');
 
