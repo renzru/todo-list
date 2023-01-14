@@ -1,0 +1,76 @@
+:root {
+    font-family: Lato, sans-serif;
+
+
+    --clr-dark: #2d2d2d;
+    --fs-default: 1rem;
+    --fs-500: 1.15rem;
+    --fs-600: 1.75rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+body {
+    background-color: black;
+    color: var(--clr-dark);
+}
+
+.text-dark {
+    color: var(--clr-dark);
+}
+
+.fs-default {
+    font-size: var(--fs-default);
+}
+
+.fs-500 {
+    font-size: var(--fs-500);
+}
+
+.fs-600 {
+    font-size: var(--fs-600);
+}
+
+.tasks-container {
+    background-color: white;
+}
+
+.tasks-container>*+* {
+    border-top: 1px solid rgb(0, 0, 0, 0.1);
+}
+
+.task {
+    position: relative;
+    align-items: center;
+    padding: 1.25rem;
+}
+
+.task>div {
+    position: absolute;
+    bottom: -1.25rem;
+    right: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    background-color: yellow;
+}
+
+.task>div[aria-hidden="false"] {
+    display: unset;
+}
+
+.task input {
+    font-family: Poppins, sans-serif !important;
+    border: none;
+    outline: none;
+}
+
+.task input::selection {
+    background-color: unset;
+}
