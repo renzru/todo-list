@@ -25,67 +25,7 @@ function getNewTaskBtn() {
   };
 }
 
-// class DOMTask {
-
-//   constructor() {
-//     this.task = newElement('article', 'task', 'flex', 'bg-white');
-//     this.meta = {};
-//     this.elements = {};
-//   }
-
-//   static setParent(parent) {
-//     this.elements.parent = document.querySelector(parent);
-//   }
-
-//   static appendContent() {
-//     this.task.append(this.elements.indicator, this.meta.title, this.elements.expand, this.elements.details);
-//     this.elements.parent.append(this.task);
-//   }
-
-//   static createTitle() {
-//     const title = newElement('input', 'fs-500');
-//     title.dataset.meta = 'title';
-//     title.placeholder = 'Todo';
-
-//     this.meta.title = title;
-//   }
-
-//   static createExpand() {
-//     const expand = newElement('img', 'expand-icon');
-//     expand.src = './public/expand.svg';
-
-//     this.elements.expand = expand;
-//   }
-
-//   static createStatus(title) {
-//     const status = document.createElement('input');
-//     status.dataset.meta = 'status';
-//     status.type = 'checkbox';
-
-//     const indicator = newElement('div', 'status-indicator');
-//     indicator.style.backgroundColor = 'var(--status-default)';
-
-//     renderStatus(status, indicator, title);
-//     indicator.append(status);
-
-//     this.meta.status = status;
-//     this.elements.indicator = indicator;
-//   }
-
-//   static createDetails() {
-//     const description = document.createElement('textarea');
-//     description.dataset.meta = 'description';
-
-//     const details = newElement('div', 'details');
-//     details.append(description);
-
-//     this.meta.description = description;
-//     this.elements.details = details;
-//   }
-// }
-
 class DOMTask {
-
   constructor() {
     this.task = newElement('article', 'task', 'flex', 'bg-white');
     this.meta = {};
@@ -162,7 +102,6 @@ function createDOMTask() {
   task.elements.details = DOMTask.createDetails();
   task.meta.description = task.getDescription();
 
-  console.log(task)
   createTask(task.meta.status, task.meta.title, task.meta.description);
   renderDOMTask(task);
 }
@@ -221,71 +160,3 @@ function newElement(tag, ...classes) {
 
 
 getNewTaskBtn();
-
-
-
-
-
-
-
-// // only renders task in DOM
-// function renderTask() {
-//   const parent = document.querySelector(".container--tasks");
-//   const task = newElement('article', 'task', 'flex', 'bg-white');
-
-//   const title = createTitle();
-//   const expand = createExpand();
-
-//   const statusParent = createStatus(title);
-//   const status = statusParent.querySelector('input');
-
-//   const detailsParent = createDetails();
-//   const description = detailsParent.querySelector('textarea[data-info="description"]');
-
-//   linkTask(status, title, description);
-
-//   task.append(statusParent, title, expand, detailsParent);
-//   parent.append(task);
-// }
-
-// // only creates title
-// function createTitle() {
-//   const title = newElement('input', 'fs-500');
-//   title.dataset.meta = 'title';
-//   title.placeholder = 'Todo';
-
-//   return title;
-// }
-
-// // only creates expand button
-// function createExpand() {
-//   const expand = newElement('img', 'expand-icon');
-//   expand.src = './public/expand.svg';
-
-//   return expand;
-// }
-
-// // only creates a status container
-// function createStatus(title) {
-//   const status = document.createElement('input');
-//   status.dataset.meta = 'status';
-//   status.type = 'checkbox';
-
-//   const statusIndicator = newElement('div', 'status-indicator');
-//   statusIndicator.style.backgroundColor = 'var(--status-default)';
-
-//   renderStatus(status, statusIndicator, title);
-
-//   statusIndicator.append(status);
-//   return statusIndicator;
-// }
-
-// // only create a details container
-// function createDetails() {
-//   const details = newElement('div', 'details');
-//   const description = document.createElement('textarea');
-//   description.dataset.meta = 'description';
-
-//   details.append(description);
-//   return details;
-// }
