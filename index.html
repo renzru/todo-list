@@ -17,19 +17,21 @@
 </head>
 
 <body>
-  <section class="container container--tasks grid">
-    <div class="flex">
-      <h1 class="fs-900 bold">Home</h1>
-      <button class="add-task">+</button>
-    </div>
-    <article class="task flex">
-      <input data-info="status" type="checkbox">
-      <input data-info="title" type="text" placeholder="Todo" class="fs-500">
-      <div aria-hidden="true">
-        <input data-info="description" type="text" placeholder="Write a description">
+  <main>
+    <section class="container container--tasks grid">
+      <div class="task-heading flex">
+        <h1 class="fs-900 bold">Home</h1>
+        <button class="add-task">+</button>
       </div>
-    </article>
-  </section>
+      <article class="task flex">
+        <input data-info="status" type="checkbox">
+        <input data-info="title" type="text" placeholder="Todo" class="fs-500">
+        <div aria-hidden="true">
+          <input data-info="description" type="text" placeholder="Write a description">
+        </div>
+      </article>
+    </section>
+  </main>
   <script type="module" src="/src/main.js"></script>
 </body>
 
