@@ -144,11 +144,11 @@ main {
     background-color: transparent;
 }
 
-.task input[data-info="status"] {
+.task input[data-meta="status"] {
     transform: scale(1.5);
 }
 
-.task input[data-info="title"] {
+.task input[data-meta="title"] {
     margin-left: 4rem;
     width: 100%;
 }
