@@ -6,13 +6,18 @@
 
     --bg-light: #f6f6f6;
     --bg-white: white;
-    --rounded-corner: 0.5rem;
+    --rounded-corner: 0 0.5rem 0.5rem 00.5rem;
     --fs-default: 1rem;
     --fs-500: 1.15rem;
     --fs-600: 1.75rem;
     --fs-700: 1.85rem;
     --fs-800: 2rem;
     --fs-900: 2.5rem;
+
+    --status-completed: #73eca6;
+    --status-priority: #f07fec;
+    --status-in-progress: #ffda47;
+    --status-default: var(--clr-light);
 }
 
 /* Utilities */
@@ -83,10 +88,6 @@ main {
     gap: 0.5rem;
 }
 
-.container--tasks>*+* {
-    border-top: 1px solid rgb(0, 0, 0, 0.05);
-}
-
 .task {
     position: relative;
     align-items: center;
@@ -98,7 +99,7 @@ main {
 
 .expand-icon {
     margin-left: auto;
-    width: 5%;
+    width: 2rem;
     opacity: 0.35;
 }
 
@@ -107,10 +108,21 @@ main {
     place-items: center;
     aspect-ratio: 1;
     border-radius: 0.25rem;
+    background-color: white;
     box-shadow: 0 0 2px rgb(0, 0, 0, 0.5);
 }
 
-.task>div {
+.status-indicator {
+    position: absolute;
+    left: 0;
+    display: inline-grid;
+    place-items: center;
+    width: clamp(3rem, 10%, 4rem);
+    height: 100%;
+    border-radius: 0 0 0 0.5rem;
+}
+
+.details {
     position: absolute;
     bottom: -1.25rem;
     right: 0;
@@ -129,11 +141,38 @@ main {
     border: none;
     outline: none;
     caret-color: transparent;
+    background-color: transparent;
+}
+
+.task input[data-info="status"] {
+    transform: scale(1.5);
+}
+
+.task input[data-info="title"] {
+    margin-left: 4rem;
+    width: 100%;
 }
 
 .task input::selection {
     background-color: unset;
 }
+
+.status-completed {
+    background-color: var(--status-completed) !important;
+}
+
+.status-priority {
+    background-color: var(--status-priority) !important;
+}
+
+.status-default {
+    background-color: var(--status-default) !important;
+}
+
+.status-in-progress {
+    background-color: var(--status-in-progress) !important;
+}
+
 
 .completed {
     color: var(--clr-light);
