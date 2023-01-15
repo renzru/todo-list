@@ -28,16 +28,45 @@ function getNewTaskBtn() {
   };
 }
 
-function createTaskContainer() {
-
-}
-
 // only renders task in DOM
 function renderTask() {
   const parent = document.querySelector(".container--tasks");
   const task = newElement('article', 'task', 'flex', 'bg-white');
 
-  // TODO place into another function
+  const title = createTitle();
+  const expand = createExpandBtn();
+
+  const statusParent = createStatus(title);
+  const status = statusParent.querySelector('input');
+
+  const detailsParent = createDetails();
+  const description = detailsParent.querySelector('textarea[data-info="description"]');
+
+  linkTask(status, title, description);
+
+  task.append(statusParent, title, expand, detailsParent);
+  parent.append(task);
+}
+
+// only creates title
+function createTitle() {
+  const title = newElement('input', 'fs-500');
+  title.dataset.info = 'title';
+  title.placeholder = 'Todo';
+
+  return title;
+}
+
+// only creates expand button
+function createExpandBtn() {
+  const expand = newElement('img', 'expand-icon');
+  expand.src = './public/expand.svg';
+
+  return expand;
+}
+
+// only creates a status container
+function createStatus(title) {
   const status = document.createElement('input');
   status.dataset.info = 'status';
   status.type = 'checkbox';
@@ -45,27 +74,20 @@ function renderTask() {
   const statusIndicator = newElement('div', 'status-indicator');
   statusIndicator.style.backgroundColor = 'var(--status-default)';
 
-  const title = newElement('input', 'fs-500');
-  title.dataset.info = 'title';
-  title.placeholder = 'Todo';
+  renderStatus(status, statusIndicator, title);
 
-  // TODO place into another function
+  statusIndicator.append(status);
+  return statusIndicator;
+}
+
+// only create a details container
+function createDetails() {
   const details = newElement('div', 'details');
   const description = document.createElement('textarea');
   description.dataset.info = 'description';
 
-  const expand = newElement('img', 'expand-icon');
-  expand.src = './public/expand.svg';
-
-  renderStatus(status, statusIndicator, title);
-  linkTask(status, title, description);
-
-  statusIndicator.append(status);
   details.append(description);
-
-  task.append(statusIndicator, title, expand, details);
-
-  parent.append(task);
+  return details;
 }
 
 // only for modifying a task's completion status
