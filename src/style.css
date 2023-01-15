@@ -1,16 +1,14 @@
 :root {
     font-family: Lato, sans-serif;
 
-    --clr-dark: #2d2d2d;
+    --clr-dark: #252525;
     --clr-light: #cfcfcf;
     --fs-default: 1rem;
     --fs-500: 1.15rem;
     --fs-600: 1.75rem;
-}
-
-.completed {
-    color: var(--clr-light);
-    text-decoration: line-through;
+    --fs-700: 1.85rem;
+    --fs-800: 2rem;
+    --fs-900: 2.5rem;
 }
 
 /* Utilities */
@@ -24,12 +22,15 @@
 }
 
 body {
-    background-color: black;
     color: var(--clr-dark);
 }
 
 .text-dark {
     color: var(--clr-dark);
+}
+
+.bold {
+    font-weight: 700;
 }
 
 .fs-default {
@@ -44,20 +45,46 @@ body {
     font-size: var(--fs-600);
 }
 
-/* Components */
-
-.tasks-container {
-    background-color: white;
+.fs-800 {
+    font-size: var(--fs-800);
 }
 
-.tasks-container>*+* {
-    border-top: 1px solid rgb(0, 0, 0, 0.1);
+.fs-900 {
+    font-size: var(--fs-900);
+}
+
+/* Components */
+
+.container {
+    padding-inline: 2rem;
+}
+
+
+.container--tasks>div {
+    place-items: center;
+    gap: 1rem;
+    padding-block: 1.5rem;
+}
+
+
+.container--tasks>*+* {
+    border-top: 1px solid rgb(0, 0, 0, 0.05);
 }
 
 .task {
     position: relative;
     align-items: center;
+    gap: 1rem;
     padding: 1.25rem;
+}
+
+.add-task {
+    display: inline-grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border-radius: 0.25rem;
+    background: transparent;
+    box-shadow: 0 0 2px rgb(0, 0, 0, 0.5);
 }
 
 .task>div {
@@ -83,4 +110,9 @@ body {
 
 .task input::selection {
     background-color: unset;
+}
+
+.completed {
+    color: var(--clr-light);
+    text-decoration: line-through;
 }

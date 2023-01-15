@@ -12,16 +12,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700&display=swap" rel="stylesheet">
 
-
+  <link rel="stylesheet" href="./src/reset.css">
   <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
-  <button class="add-task"></button>
-  <section class="tasks-container grid">
+  <section class="container container--tasks grid">
+    <div class="flex">
+      <h1 class="fs-900 bold">Home</h1>
+      <button class="add-task">+</button>
+    </div>
     <article class="task flex">
-      <input class="" type="checkbox">
-      <input data-info="title" type="text" placeholder="Todo" class="letter-spacing-1 fs-500">
+      <input data-info="status" type="checkbox">
+      <input data-info="title" type="text" placeholder="Todo" class="fs-500">
       <div aria-hidden="true">
         <input data-info="description" type="text" placeholder="Write a description">
       </div>
