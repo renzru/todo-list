@@ -3,13 +3,6 @@ import {
 } from "./DOMTask";
 
 import {
-  renderStatus,
-  renderTask,
-  pushTask,
-  newElement
-} from "./Utils"
-
-import {
   Task
 } from "./Task"
 
@@ -17,13 +10,19 @@ import {
   Project
 } from "./Project"
 
+import {
+  renderStatus,
+  renderTask,
+  pushTask,
+  newElement
+} from "./Utils"
 
 let project = new Project('Home');
 
 function getTaskButton() {
-  const newTaskBtn = document.querySelector(".add-task");
+  const button = document.querySelector(".add-task");
 
-  newTaskBtn.onclick = () => createTask();
+  button.onclick = () => createTask();
 }
 
 function createTask() {
