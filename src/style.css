@@ -13,6 +13,7 @@
     --fs-700: 1.85rem;
     --fs-800: 2rem;
     --fs-900: 2.5rem;
+    --shadow: 0, 0, 0;
 
     --status-completed: #73eca6;
     --status-priority: #f07fec;
@@ -85,23 +86,10 @@ main {
 
 .container--tasks {
     grid-column: 2;
-    gap: 0.5rem;
-}
-
-.task {
-    position: relative;
-    align-items: center;
     gap: 1rem;
-    padding: 1.25rem;
-    border-radius: var(--rounded-corner);
-    box-shadow: 0 1px 2px rgb(0, 0, 0, 0.125);
 }
 
-.expand-icon {
-    margin-left: auto;
-    width: 2rem;
-    opacity: 0.35;
-}
+/* Add Task Button */
 
 .add-task {
     display: inline-grid;
@@ -109,39 +97,25 @@ main {
     aspect-ratio: 1;
     border-radius: 0.25rem;
     background-color: white;
-    box-shadow: 0 0 2px rgb(0, 0, 0, 0.5);
+    box-shadow: 0 0 2px rgb(var(--shadow), 0.5);
 }
 
-.status-indicator {
-    position: absolute;
-    left: 0;
-    display: inline-grid;
-    place-items: center;
-    width: clamp(3rem, 10%, 4rem);
-    height: 100%;
-    border-radius: 0 0 0 0.5rem;
-}
+/* Task Card */
 
-.details {
-    position: absolute;
-    bottom: -1.25rem;
-    right: 0;
-    left: 0;
-    display: none;
-    width: 100%;
-    background-color: yellow;
-}
-
-.task>div[aria-hidden="false"] {
-    display: unset;
+.task {
+    position: relative;
+    align-items: center;
+    padding: 1.35rem 1rem;
+    border-radius: 0.65rem;
+    box-shadow: 0 1px 2px rgb(var(--shadow), 0.125);
 }
 
 .task input {
     font-family: Poppins, sans-serif !important;
+    background-color: transparent;
     border: none;
     outline: none;
     caret-color: transparent;
-    background-color: transparent;
 }
 
 .task input[data-meta="status"] {
@@ -157,24 +131,60 @@ main {
     background-color: unset;
 }
 
-.status-completed {
-    background-color: var(--status-completed) !important;
+/* Status Indicators */
+
+.status-indicator {
+    position: absolute;
+    left: 0;
+    display: inline-grid;
+    place-items: center;
+    width: clamp(3rem, 10%, 4rem);
+    height: 100%;
+    border-radius: 0.65rem 0 0 0.65rem;
 }
 
-.status-priority {
-    background-color: var(--status-priority) !important;
+.status-completed {
+    background-color: var(--status-completed) !important;
 }
 
 .status-default {
     background-color: var(--status-default) !important;
 }
 
+.completed {
+    color: var(--clr-light);
+    text-decoration: line-through;
+}
+
+/* Priority Indicators */
+
+.status-priority {
+    background-color: var(--status-priority) !important;
+}
+
+
 .status-in-progress {
     background-color: var(--status-in-progress) !important;
 }
 
+/* Task Details */
 
-.completed {
-    color: var(--clr-light);
-    text-decoration: line-through;
+.expand-icon {
+    margin-left: auto;
+    width: 2rem;
+    opacity: 0.35;
+}
+
+.details {
+    position: absolute;
+    bottom: -1.25rem;
+    right: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    background-color: yellow;
+}
+
+.task .details[aria-hidden="false"] {
+    display: unset;
 }
