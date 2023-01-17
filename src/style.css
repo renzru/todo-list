@@ -102,6 +102,7 @@ main {
 
 /* Task Card */
 
+
 .task {
     position: relative;
     align-items: center;
@@ -187,4 +188,18 @@ main {
 
 .task .details[aria-hidden="false"] {
     display: unset;
+}
+
+.update-status {
+    animation: update-status 0.25s ease 1;
+}
+
+@keyframes update-status {
+    50% {
+        transform: scale(1.035);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

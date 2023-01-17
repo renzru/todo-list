@@ -21,8 +21,8 @@ class UI {
     static newTask() {
         const task = UI.createTask();
         const template = UI.createTemplate();
-        UI.linkData(task, template.meta);
 
+        UI.linkData(task, template.meta);
         template.render();
     }
 
@@ -32,6 +32,7 @@ class UI {
 
         return task;
     }
+
     static createTemplate() {
         const template = new Template();
         template.setParent('.container--tasks');
