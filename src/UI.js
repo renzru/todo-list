@@ -11,24 +11,27 @@ import {
 } from "./Project"
 
 let project = new Project('Home');
-
 class UI {
     static getTaskButton() {
         const button = document.querySelector(".add-task");
 
-        button.onclick = () => UI.createTask();
+        button.onclick = () => UI.newTask();
     }
 
-    static createTask() {
-        const task = new Task();
-        task.pushTask(project);
-
+    static newTask() {
+        const task = UI.createTask();
         const template = UI.createTemplate();
         UI.linkData(task, template.meta);
 
         template.render();
     }
 
+    static createTask() {
+        const task = new Task();
+        task.pushTask(project);
+
+        return task;
+    }
     static createTemplate() {
         const template = new Template();
         template.setParent('.container--tasks');
