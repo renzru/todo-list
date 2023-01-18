@@ -1,13 +1,13 @@
 class Animation {
-    static setAnimation(animation, element) {
+    static newAnimation(animation, element) {
         element.classList.add(animation);
-        element.onanimationend = () => element.classList.remove(animation);
+        element.addEventListener("click", () => element.classList.remove(animation));
     }
 
     static animateStatus(status, indicator, title, element) {
         status.addEventListener('change', () => {
             if (status.checked) {
-                Animation.setAnimation('update-status', element);
+                Animation.newAnimation('update-status', element);
 
                 title.classList.toggle('completed');
                 indicator.classList.toggle('status-completed');
