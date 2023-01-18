@@ -1,10 +1,10 @@
 import {
-    createImportSpecifier
-} from "typescript";
-import {
     newElement,
 } from "./Utils";
 
+import {
+    Animation
+} from "./Animation"
 
 class Template {
     constructor() {
@@ -66,20 +66,6 @@ class Template {
         return description
     }
 
-    // Misc. 
-    static renderStatus(status, indicator, title) {
-        status.addEventListener('change', () => {
-            if (status.checked) {
-                title.classList.toggle('completed');
-                indicator.classList.toggle('status-completed');
-            } else {
-                title.classList.toggle('completed');
-                indicator.classList.toggle('status-completed');
-            }
-
-        })
-    }
-
     // Getter Methods
     getTitle() {
         return this.meta.title;
@@ -112,13 +98,18 @@ class Template {
 
     // Render in DOM
     render() {
-        Template.renderStatus(this.meta.status, this.assets.indicator, this.meta.title);
-
         this.assets.indicator.append(this.getStatus());
         this.assets.details.append(this.getDescription());
 
         this.task.append(this.assets.indicator, this.meta.title, this.assets.expand, this.assets.details);
         this.parent.append(this.task);
+
+        this.renderAnimations();
+    }
+
+    renderAnimations() {
+        Animation.animateStatus(this.getStatus(), this.assets.indicator, this.meta.title, this.task);
+        Animation.animateNewTask(this.task);
     }
 }
 
