@@ -1,7 +1,7 @@
 class Animation {
     static newAnimation(animation, element) {
         element.classList.add(animation);
-        element.addEventListener("click", () => element.classList.remove(animation));
+        element.addEventListener("animationend", () => element.classList.remove(animation));
     }
 
     static animateStatus(status, indicator, title, element) {
@@ -17,6 +17,10 @@ class Animation {
             }
 
         })
+    }
+
+    static animateNewTask(element) {
+        Animation.newAnimation('new-task', element);
     }
 }
 

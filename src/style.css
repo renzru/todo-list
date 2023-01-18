@@ -190,6 +190,29 @@ main {
     display: unset;
 }
 
+/* Animations */
+
+.new-task {
+    animation: new-task 0.25s ease 1;
+}
+
+@keyframes new-task {
+    0% {
+        transform: translateY(50%);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateY(-10%);
+
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 .update-status {
     animation: update-status 0.25s ease 1;
 }
