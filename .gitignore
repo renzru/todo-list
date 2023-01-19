@@ -25,4 +25,4 @@ dist-ssr
 
 # Other
 
-pseudo.txt
+.eslintrc.json
