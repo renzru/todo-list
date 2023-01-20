@@ -19,6 +19,20 @@ class Animation {
         })
     }
 
+    static animateDetails(button, element) {
+        button.addEventListener('click', () => {
+            if (element.ariaHidden === 'true') {
+                Animation.newAnimation('show-details', element);
+                button.ariaHidden = 'false';
+                element.ariaHidden = 'false';
+            } else {
+                Animation.newAnimation('hide-details', element);
+                button.ariaHidden = 'true';
+                element.ariaHidden = 'true';
+            }
+        })
+    }
+
     static animateNewTask(element) {
         Animation.newAnimation('new-task', element);
     }

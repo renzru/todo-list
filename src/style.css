@@ -102,20 +102,22 @@ main {
 
 /* Task Card */
 
-
 .task {
-    position: relative;
     align-items: center;
-    padding: 1.35rem 1rem;
     border-radius: 0.65rem;
     box-shadow: 0 1px 2px rgb(var(--shadow), 0.125);
 }
 
-.task input {
+.task input,
+.task textarea {
     font-family: Poppins, sans-serif !important;
-    background-color: transparent;
     border: none;
     outline: none;
+}
+
+.task input {
+    padding: 1.35rem 1rem;
+    background-color: transparent;
     caret-color: transparent;
 }
 
@@ -124,7 +126,6 @@ main {
 }
 
 .task input[data-meta="title"] {
-    margin-left: 4rem;
     width: 100%;
 }
 
@@ -135,7 +136,6 @@ main {
 /* Status Indicators */
 
 .status-indicator {
-    position: absolute;
     left: 0;
     display: inline-grid;
     place-items: center;
@@ -168,26 +168,53 @@ main {
     background-color: var(--status-in-progress) !important;
 }
 
-/* Task Details */
+/* Task modal */
 
 .expand-icon {
     margin-left: auto;
     width: 2rem;
     opacity: 0.35;
+    transition: rotate 0.25s ease-in-out;
 }
 
-.details {
+.expand-icon[aria-hidden="false"] {
+    rotate: 90deg;
+}
+
+.modal {
     position: absolute;
-    bottom: -1.25rem;
-    right: 0;
+    z-index: 1000;
     left: 0;
+    right: 0;
     display: none;
-    width: 100%;
-    background-color: yellow;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    width: clamp(15rem, 60vw, 60rem);
+    background-color: var(--bg-white);
+    box-shadow: 0 1px 2px rgb(var(--shadow), 0.125);
 }
 
-.task .details[aria-hidden="false"] {
-    display: unset;
+.modal::before {
+    content: '';
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: brightness(95%) blur(5px);
+}
+
+.modal[aria-hidden="false"] {
+    display: grid;
+}
+
+.modal textarea {
+    padding: 1rem;
+    resize: vertical;
+    width: unset;
+    border-bottom: 1px solid var(--clr-light);
 }
 
 /* Animations */
@@ -219,10 +246,46 @@ main {
 
 @keyframes update-status {
     50% {
-        transform: scale(1.02);
+        transform: scale(1.01);
     }
 
     100% {
         transform: scale(1);
+    }
+}
+
+.show-modal {
+    animation: show-modal 0.35s ease-in-out 1;
+}
+
+@keyframes show-modal {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    80% {
+        transform: translateY(-5%);
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.hide-modal {
+    animation: show-modal 0.25s ease-in-out 1;
+}
+
+@keyframes hide-modal {
+    0% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scaleY(0);
+        opacity: 0;
     }
 }

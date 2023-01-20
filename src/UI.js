@@ -3,15 +3,27 @@ import {
 } from "./Task"
 
 import {
-    Template
-} from "./Template"
+    Card
+} from "./Card"
 
 import {
     Project
 } from "./Project"
+import {
+    Modal
+} from "./Modal";
 
 let project = new Project('Home');
 class UI {
+    static initialize() {
+        UI.getTaskButton();
+        UI.getModal();
+    }
+
+    static getModal() {
+        document.querySelector('body').append(Modal.createModal());
+    }
+
     static getTaskButton() {
         const button = document.querySelector(".add-task");
 
@@ -20,36 +32,23 @@ class UI {
 
     static newTask() {
         const task = UI.createTask();
-        const template = UI.createTemplate();
+        const card = UI.createCard();
 
-        UI.linkData(task, template.meta);
-        template.render();
+        task.syncData(card);
+        card.render();
     }
 
     static createTask() {
         const task = new Task();
-        task.pushTask(project);
 
         return task;
     }
 
-    static createTemplate() {
-        const template = new Template();
-        template.setParent('.container--tasks');
+    static createCard() {
+        const card = new Card();
+        card.setParent('.container--tasks');
 
-        return template;
-    }
-
-    static linkData(task, meta) {
-        const properties = [meta.title, meta.status, meta.description];
-
-        properties.forEach(property => {
-            property.addEventListener('change', task.setProperty(property.dataset.meta, property.value));
-        });
-    }
-
-    static initialize() {
-        UI.getTaskButton();
+        return card;
     }
 }
 

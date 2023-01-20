@@ -26,6 +26,10 @@ class Task {
     pushTask(project) {
         project.tasks.push(this);
     }
+
+    syncData(dom) {
+        dom.task = this;
+    }
 }
 
 export {
