@@ -9,9 +9,6 @@ import {
 import {
     Project
 } from "./Project"
-import {
-    Modal
-} from "./Modal";
 
 let project = new Project('Home');
 class UI {
