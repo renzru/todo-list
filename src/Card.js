@@ -23,7 +23,7 @@ class Card {
     static createTitle() {
         const title = newElement('input', 'fs-500');
         title.dataset.meta = 'title';
-        title.placeholder = 'Todo';
+        title.placeholder = 'New Task';
 
         return title
     }
@@ -51,6 +51,36 @@ class Card {
         return indicator;
     }
 
+    static createPriority(value) {
+        const priority = newElement('div', 'priority-indicator', 'medium');
+        priority.textContent = this.getPriorityText(value);
+        priority.style.backgroundColor = Card.getPriorityColor(value);
+
+        return priority;
+    }
+
+    static getPriorityText(priority) {
+        switch (priority) {
+            case 'Important':
+                return 'Important';
+            case 'Urgent':
+                return 'Urgent';
+            default:
+                return 'Normal';
+        }
+    }
+
+    static getPriorityColor(priority) {
+        switch (priority) {
+            case 'Important':
+                return 'var(--priority-important)';
+            case 'Urgent':
+                return 'var(--priority-urgent)';
+            default:
+                return 'var(--priority-normal)';
+        }
+    }
+
     // Getter Methods
     getNode(node) {
         return this.assets[node];
@@ -63,9 +93,7 @@ class Card {
 
     // Render in DOM
     render() {
-        this.getNode('indicator').append(this.getNode('status'));
-
-        this.card.append(this.getNode('indicator'), this.getNode('title'), this.getNode('expand'));
+        this.card.append(this.getNode('indicator'), this.getNode('status'), this.getNode('title'), this.getNode('expand'));
         this.parent.append(this.card);
 
         this.syncModalView();
@@ -89,7 +117,25 @@ class Card {
         const modal = document.querySelector('.modal');
         const description = modal.querySelector('textarea[data-meta="description"]');
 
+        // TODO: create a dropdown
+        this.assets.priority = Card.createPriority('Urgent');
+        this.card.append(this.getNode('priority'))
+        /*
+            dropdown
+            dropdown on change =>
+
+        */
+
         // TODO: make it so that the task's values update on button submit, not on value change
+        /*
+        btn on change =>
+        this.task.setProperty('priority', 'Important')
+        this.updateCard(node, value) {
+            this.getNode(node).value = value;
+        }
+
+        */
+
         description.addEventListener('change', () => {
             this.task.setProperty('description', description.value);
             this.getNode('title').value = description.value;
