@@ -17,11 +17,6 @@ let project = new Project('Home');
 class UI {
     static initialize() {
         UI.getTaskButton();
-        UI.getModal();
-    }
-
-    static getModal() {
-        document.querySelector('body').append(Modal.createModal());
     }
 
     static getTaskButton() {
@@ -31,17 +26,9 @@ class UI {
     }
 
     static newTask() {
-        const task = UI.createTask();
         const card = UI.createCard();
 
-        task.syncData(card);
         card.render();
-    }
-
-    static createTask() {
-        const task = new Task();
-
-        return task;
     }
 
     static createCard() {

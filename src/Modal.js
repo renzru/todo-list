@@ -1,38 +1,24 @@
 import {
-    newElement,
-} from "./Utils";
+    nodeModuleNameResolver
+} from "typescript";
 
 class Modal {
-
-    static createDetails() {
-        const details = newElement('div', 'modal');
-        details.ariaHidden = 'true';
-
-        return details;
+    static initialize(modal, source) {
+        modal.querySelector('textarea[data-meta="notes"]').value = source.notes;
+        modal.querySelector('select[data-meta="priority"').value = source.priority;
     }
 
-    static createNotes() {
-        const notes = document.createElement('textarea');
-        notes.dataset.meta = 'description';
-        notes.placeholder = 'Write a description';
-
-        return notes;
+    static reset(modal) {
+        modal.querySelector('textarea[data-meta="notes"]').value = '';
+        modal.querySelector('select[data-meta="priority"').value = '';
     }
 
-    static createModal() {
-        const details = Modal.createDetails()
-        const notes = Modal.createNotes();
-
-        details.append(notes);
-        return details;
+    static show(modal) {
+        modal.style.transform = 'translateX(0)';
     }
 
-    setProperty(property, value) {
-        this[property] = value;
-    }
-
-    getProperty(property) {
-        return this[property];
+    static hide(modal) {
+        modal.style.transform = 'translateX(100%)';
     }
 }
 

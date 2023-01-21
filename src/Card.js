@@ -5,11 +5,18 @@ import {
 import {
     Animation
 } from "./Animation"
+import {
+    Modal
+} from "./Modal";
+
+import {
+    Task
+} from "./Task";
 
 class Card {
     constructor() {
-        this.card = newElement('article', 'task', 'flex', 'bg-white'),
-            this.task,
+        this.card = newElement('article', 'task', 'flex', 'bg-white', 'container--input'),
+            this.task = new Task(),
             this.parent,
             this.assets = {
                 title: Card.createTitle(),
@@ -31,7 +38,6 @@ class Card {
     static createExpand() {
         const expand = newElement('img', 'expand-icon');
         expand.src = './public/expand.svg';
-        expand.ariaHidden = 'true';
 
         return expand
     }
@@ -52,6 +58,10 @@ class Card {
     }
 
     static createPriority(value) {
+        if (value === 'none') {
+            return;
+        }
+
         const priority = newElement('div', 'priority-indicator', 'medium');
         priority.textContent = this.getPriorityText(value);
         priority.style.backgroundColor = Card.getPriorityColor(value);
@@ -61,9 +71,9 @@ class Card {
 
     static getPriorityText(priority) {
         switch (priority) {
-            case 'Important':
+            case 'important':
                 return 'Important';
-            case 'Urgent':
+            case 'urgent':
                 return 'Urgent';
             default:
                 return 'Normal';
@@ -72,9 +82,9 @@ class Card {
 
     static getPriorityColor(priority) {
         switch (priority) {
-            case 'Important':
+            case 'important':
                 return 'var(--priority-important)';
-            case 'Urgent':
+            case 'urgent':
                 return 'var(--priority-urgent)';
             default:
                 return 'var(--priority-normal)';
@@ -96,50 +106,62 @@ class Card {
         this.card.append(this.getNode('indicator'), this.getNode('status'), this.getNode('title'), this.getNode('expand'));
         this.parent.append(this.card);
 
+        this.syncHeaderData();
         this.syncModalView();
         this.syncModalData();
         this.renderAnimations();
+    }
+
+    syncHeaderData() {
+        this.getNode('title').onchange = () => {
+            this.task.setProperty('title', this.getNode('title').value);
+        }
+
+        this.getNode('status').onchange = () => {
+            this.task.setProperty('status', this.getNode('status').checked);
+        }
     }
 
     syncModalView() {
         const modal = document.querySelector('.modal');
 
         this.getNode('expand').addEventListener('click', () => {
+            Modal.initialize(modal, this.task);
+            Modal.show(modal);
+            console.log(this);
+
             if (modal.ariaHidden === 'true') {
                 modal.ariaHidden = 'false';
             } else {
                 modal.ariaHidden = 'true';
             }
-        })
+        });
     }
 
     syncModalData() {
         const modal = document.querySelector('.modal');
-        const description = modal.querySelector('textarea[data-meta="description"]');
+        const cancel = modal.querySelector('.modal-cancel');
+        const save = modal.querySelector('.modal-save');
 
-        // TODO: create a dropdown
-        this.assets.priority = Card.createPriority('Urgent');
-        this.card.append(this.getNode('priority'))
-        /*
-            dropdown
-            dropdown on change =>
-
-        */
-
-        // TODO: make it so that the task's values update on button submit, not on value change
-        /*
-        btn on change =>
-        this.task.setProperty('priority', 'Important')
-        this.updateCard(node, value) {
-            this.getNode(node).value = value;
+        cancel.onclick = () => {
+            Modal.hide(modal);
+            console.log(this);
         }
+        save.onclick = () => {
+            this.save(modal)
+            Modal.hide(modal);
+            console.log(this);
+        }
+    }
 
-        */
+    save(modal) {
+        const notes = modal.querySelector('textarea[data-meta="notes"]');
+        const priority = modal.querySelector('select[data-meta="priority"');
 
-        description.addEventListener('change', () => {
-            this.task.setProperty('description', description.value);
-            this.getNode('title').value = description.value;
-        })
+        this.task.setProperty('notes', notes.value);
+        this.task.setProperty('priority', priority.value);
+
+        console.log(this.task)
     }
 
     renderAnimations() {

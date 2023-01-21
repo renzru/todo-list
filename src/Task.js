@@ -2,7 +2,7 @@ class Task {
     constructor() {
         this.status;
         this.title;
-        this.description;
+        this.notes;
         this.priority;
         this.deadline;
     }
