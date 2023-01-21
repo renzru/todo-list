@@ -211,6 +211,7 @@ main {
     background-color: var(--bg-white);
     transform: translateX(100%);
     transition: transform 0.35s ease-in-out;
+    box-shadow: 0 0 1px rgb(var(--shadow), 0.5);
 }
 
 /* Modal Interactive Area */

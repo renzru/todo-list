@@ -1,9 +1,9 @@
 class Task {
     constructor() {
-        this.status;
-        this.title;
-        this.notes;
-        this.priority;
+        this.status = false;
+        this.title = '';
+        this.notes = '';
+        this.priority = '';
         this.deadline;
     }
 
@@ -11,16 +11,8 @@ class Task {
         this.project = project;
     }
 
-    setProperty(property, value) {
-        this[property] = value;
-    }
-
     getProject() {
         return this.project;
-    }
-
-    getProperty(property) {
-        return this[property];
     }
 
     pushTask(project) {

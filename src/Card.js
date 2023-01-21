@@ -19,20 +19,30 @@ class Card {
             this.task = new Task(),
             this.parent,
             this.assets = {
-                title: Card.createTitle(),
-                status: Card.createStatus(),
+                title: this.createTitle(),
+                status: this.createStatus(),
                 indicator: Card.createIndicator(),
                 expand: Card.createExpand()
             }
     }
 
     // Create HTML Elements
-    static createTitle() {
+    createTitle() {
         const title = newElement('input', 'fs-500');
+        title.value = this.task.title;
         title.dataset.meta = 'title';
         title.placeholder = 'New Task';
 
         return title
+    }
+
+    createStatus() {
+        const status = document.createElement('input');
+        status.checked = this.task.status
+        status.dataset.meta = 'status';
+        status.type = 'checkbox';
+
+        return status;
     }
 
     static createExpand() {
@@ -40,14 +50,6 @@ class Card {
         expand.src = './public/expand.svg';
 
         return expand
-    }
-
-    static createStatus() {
-        const status = document.createElement('input');
-        status.dataset.meta = 'status';
-        status.type = 'checkbox';
-
-        return status;
     }
 
     static createIndicator() {
@@ -108,17 +110,18 @@ class Card {
 
         this.syncHeaderData();
         this.syncModalView();
-        this.syncModalData();
         this.renderAnimations();
     }
 
+    // TODO: clean up/ bundle into Modal.js
+
     syncHeaderData() {
         this.getNode('title').onchange = () => {
-            this.task.setProperty('title', this.getNode('title').value);
+            this.task.title = this.getNode('title').value;
         }
 
         this.getNode('status').onchange = () => {
-            this.task.setProperty('status', this.getNode('status').checked);
+            this.task.status = this.getNode('status').checked;
         }
     }
 
@@ -127,14 +130,9 @@ class Card {
 
         this.getNode('expand').addEventListener('click', () => {
             Modal.initialize(modal, this.task);
-            Modal.show(modal);
-            console.log(this);
+            this.syncModalData();
 
-            if (modal.ariaHidden === 'true') {
-                modal.ariaHidden = 'false';
-            } else {
-                modal.ariaHidden = 'true';
-            }
+            Modal.show(modal);
         });
     }
 
@@ -145,21 +143,20 @@ class Card {
 
         cancel.onclick = () => {
             Modal.hide(modal);
-            console.log(this);
         }
+
         save.onclick = () => {
             this.save(modal)
             Modal.hide(modal);
-            console.log(this);
         }
     }
 
     save(modal) {
         const notes = modal.querySelector('textarea[data-meta="notes"]');
-        const priority = modal.querySelector('select[data-meta="priority"');
+        const priority = modal.querySelector('select[data-meta="priority"]');
 
-        this.task.setProperty('notes', notes.value);
-        this.task.setProperty('priority', priority.value);
+        this.task.notes = notes.value;
+        this.task.priority = priority.value;
 
         console.log(this.task)
     }
@@ -167,7 +164,6 @@ class Card {
     renderAnimations() {
         Animation.animateStatus(this.getNode('status'), this.getNode('indicator'), this.getNode('title'), this.card);
         Animation.animateNewTask(this.card);
-        // Animation.animateDetails(this.getNode(expand), this.assets.details);
     }
 }
 
