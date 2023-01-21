@@ -5,39 +5,16 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Todo List</title>
-
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
-
-
   <link rel="stylesheet" href="./src/reset.css">
   <link rel="stylesheet" href="./src/style.css">
+  <title>Todo List</title>
 </head>
 
-<body>
-  <main>
-    <section class="container--tasks grid">
-      <div class="task-heading flex">
-        <h1 class="fs-900 bold">Home</h1>
-        <button class="add-task">+</button>
-      </div>
-      <article class="task flex">
-        <div class="status-indicator"></div>
-        <input data-meta="status" type="checkbox">
-        <input data-meta="title" type="text" placeholder="New Task" class="fs-500">
-        <div class="priority-indicator medium">Not Started</div>
-        <img class="expand-icon" aria-hidden="true" src="./public/expand.svg">
-        <div class="modal" aria-hidden="true">
-          <textarea data-meta="description" type="text" placeholder="Notes..."></textarea>
-        </div>
-      </article>
-    </section>
-  </main>
-  <script type="module" src="/src/main.js"></script>
-</body>
+<div id="app"></div>
+<script type="module" src="/src/main.js"></script>
 
 </html>
