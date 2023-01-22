@@ -46,6 +46,10 @@
     text-decoration: line-through;
   }
 
+  ::placeholder {
+    color: $clr-light;
+  }
+
   .task {
     position: relative;
     align-items: center;
