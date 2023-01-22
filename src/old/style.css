@@ -196,10 +196,6 @@ main {
     transition: rotate 0.25s ease-in-out;
 }
 
-.expand-icon[aria-hidden="false"] {
-    rotate: 90deg;
-}
-
 .modal {
     z-index: 1000;
     position: absolute;

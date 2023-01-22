@@ -1,11 +1,6 @@
 <script>
+  import Task from './lib/Task.svelte';
 </script>
 
-<main>
-
-</main>
-
-<style>
-
-  
-</style>
+<Task />
+<Task />
