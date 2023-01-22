@@ -1,10 +1,22 @@
 <script lang="ts">
+  let project;
+  let isDone: boolean;
+  let title: string;
+  let notes: string;
+  let priority: string;
+  let deadline;
 </script>
 
 <article class="task flex">
   <div class="is-done" />
-  <input data-meta="is-done" type="checkbox" />
-  <input data-meta="title" type="text" placeholder="New Task" class="fs-500" />
+  <input bind:checked={isDone} data-meta="is-done" type="checkbox" />
+  <input
+    bind:value={title}
+    data-meta="title"
+    class="fs-500"
+    type="text"
+    placeholder="New Task"
+  />
   <div class="priority">Not Started</div>
   <img class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
