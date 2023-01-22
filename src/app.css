@@ -13,12 +13,6 @@
   --fs-800: 2rem;
   --fs-900: 2.5rem;
   --shadow: 0, 0, 0;
-
-  --status-default: #e0e0e0;
-  --status-completed: #73eca6;
-  --priority-normal: #4879ff;
-  --priority-important: #fbc54f;
-  --priority-urgent: #ff5582;
 }
 
 /* Box Sizing */

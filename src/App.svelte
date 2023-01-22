@@ -1,6 +1,102 @@
 <script>
-  import Task from './lib/Task.svelte';
+  import Task from "./lib/Task.svelte";
 </script>
 
 <Task />
 <Task />
+
+<style lang="scss">
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+
+  $clr-dark: #252525;
+  $clr-light: #cfcfcf;
+
+  $bg-light: #f6f6f6;
+  $bg-white: white;
+
+  $fs-default: 1rem;
+  $fs-500: 1.15rem;
+  $fs-600: 1.75rem;
+  $fs-700: 1.85rem;
+  $fs-800: 2rem;
+  $fs-900: 2.5rem;
+  $shadow: 0, 0, 0;
+
+  /* Box Sizing */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Margins */
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p,
+  figure,
+  picture {
+    margin: 0;
+  }
+
+  /* Visuals */
+
+  button {
+    border: none;
+    outline: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    font-weight: 400;
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Utility Classes */
+
+  .flex {
+    display: flex;
+  }
+
+  body {
+    font-family: "Open Sans", sans-serif;
+    color: var(--clr-dark);
+    height: 100vh;
+    overflow-x: hidden;
+  }
+</style>
