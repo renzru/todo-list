@@ -3,13 +3,26 @@
   let isDone: boolean;
   let title: string;
   let notes: string;
-  let priority: string;
+  let priority: string = "Normal";
   let deadline;
+
+  const updateIsDone = (e) => {
+    const _title: HTMLElement = e.target.parentNode.querySelector(
+      'input[data-meta="title"]'
+    );
+
+    _title.classList.toggle("done");
+  };
 </script>
 
 <article class="task flex">
   <div class="is-done" />
-  <input bind:checked={isDone} data-meta="is-done" type="checkbox" />
+  <input
+    bind:checked={isDone}
+    on:change={updateIsDone}
+    data-meta="is-done"
+    type="checkbox"
+  />
   <input
     bind:value={title}
     data-meta="title"
@@ -17,7 +30,7 @@
     type="text"
     placeholder="New Task"
   />
-  <div class="priority">Not Started</div>
+  <div class="priority">{priority}</div>
   <img class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
 
@@ -27,6 +40,11 @@
   $priority-normal: #4879ff;
   $priority-important: #fbc54f;
   $priority-urgent: #ff5582;
+
+  :is(.done) {
+    color: $clr-light;
+    text-decoration: line-through;
+  }
 
   .task {
     position: relative;
@@ -56,7 +74,7 @@
         text-align: center;
         white-space: nowrap;
         border-radius: 0.35rem;
-        background-color: $priority-urgent;
+        background-color: $priority-normal;
       }
     }
   }
