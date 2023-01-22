@@ -5,7 +5,7 @@
   <div class="is-done" />
   <input data-meta="is-done" type="checkbox" />
   <input data-meta="title" type="text" placeholder="New Task" class="fs-500" />
-  <div data-meta="priority">Not Started</div>
+  <div class="priority">Not Started</div>
   <img class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
 
@@ -33,18 +33,18 @@
       &.is-done {
         width: clamp(8px, 2.5%, 10px);
         height: 100%;
-        background-color: $status-default;
         border-radius: 0.2rem 0 0 0.2rem;
+        background-color: $status-default;
       }
 
-      &[data-meta="priority"] {
+      &.priority {
         width: 8rem;
         padding: 0.35rem 1rem;
-        color: var(--bg-white);
+        color: white;
         text-align: center;
         white-space: nowrap;
-        background-color: $priority-urgent;
         border-radius: 0.35rem;
+        background-color: $priority-urgent;
       }
     }
   }
