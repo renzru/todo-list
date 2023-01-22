@@ -12,6 +12,10 @@ import {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [svelte({
-    preprocess: sveltePreprocess(),
+    preprocess: sveltePreprocess({
+      scss: {
+        prependData: `@import './src/app.scss';`
+      }
+    }),
   })],
 });

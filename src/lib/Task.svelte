@@ -10,12 +10,18 @@
 </article>
 
 <style lang="scss">
+  $status-default: #e0e0e0;
+  $status-completed: #73eca6;
+  $priority-normal: #4879ff;
+  $priority-important: #fbc54f;
+  $priority-urgent: #ff5582;
+
   .task {
     position: relative;
     align-items: center;
     gap: 1rem;
     border-radius: 0.2rem;
-    border-bottom: 2px solid var(--bg-light);
+    border-bottom: 2px solid $bg-light;
 
     input {
       font-family: "Open Sans", sans-serif !important;
@@ -27,7 +33,7 @@
       &.is-done {
         width: clamp(8px, 2.5%, 10px);
         height: 100%;
-        background-color: var(--status-default);
+        background-color: $status-default;
         border-radius: 0.2rem 0 0 0.2rem;
       }
 
@@ -37,7 +43,7 @@
         color: var(--bg-white);
         text-align: center;
         white-space: nowrap;
-        background-color: var(--priority-urgent);
+        background-color: $priority-urgent;
         border-radius: 0.35rem;
       }
     }
