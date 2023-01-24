@@ -1,37 +1,36 @@
 <script lang="ts">
-  let project;
-  let isDone: boolean;
-  let title: string;
-  let notes: string;
-  let priority: string = "Normal";
-  let deadline;
+  export let setActiveTask;
+  export let meta = {
+    isDone: false,
+    title: '',
+    notes: '',
+    priority: 'Normal',
+  };
 
   const updateIsDone = (e) => {
-    const _title: HTMLElement = e.target.parentNode.querySelector(
-      'input[data-meta="title"]'
-    );
+    const _title: HTMLElement = e.target.parentNode.querySelector('input[data-meta="title"]');
+    _title.classList.toggle('done');
+  };
 
-    _title.classList.toggle("done");
+  const showModal = (e) => {
+    const modal: HTMLElement = document.querySelector('.modal');
+    const task = e.target.parentNode;
+    setActiveTask(task);
   };
 </script>
 
 <article class="task flex">
   <div class="is-done" />
+  <input bind:checked={meta.isDone} on:change={updateIsDone} data-meta="is-done" type="checkbox" />
   <input
-    bind:checked={isDone}
-    on:change={updateIsDone}
-    data-meta="is-done"
-    type="checkbox"
-  />
-  <input
-    bind:value={title}
+    bind:value={meta.title}
     data-meta="title"
     class="fs-500"
     type="text"
     placeholder="New Task"
   />
-  <div class="priority">{priority}</div>
-  <img class="edit" src="./edit.svg" alt="Edit Task" />
+  <div class="priority">{meta.priority}</div>
+  <img class="edit" on:click={showModal} src="./edit.svg" alt="Edit Task" />
 </article>
 
 <style lang="scss">
@@ -57,8 +56,15 @@
     border-radius: 0.2rem;
     border-bottom: 2px solid $bg-light;
 
+    .edit {
+      margin-right: auto;
+      width: 2rem;
+      opacity: 0.35;
+      transition: rotate 0.25s ease-in-out;
+    }
+
     input {
-      font-family: "Open Sans", sans-serif !important;
+      font-family: 'Open Sans', sans-serif !important;
       border: none;
       outline: none;
     }
