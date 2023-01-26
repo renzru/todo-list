@@ -84,9 +84,49 @@ p {
     display: flex;
 }
 
+.grid {
+    display: grid;
+}
+
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Futura", sans-serif;
     color: var(--clr-dark);
     height: 100vh;
     overflow-x: hidden;
+}
+
+.flow>*+* {
+    margin-top: 1rem;
+}
+
+.medium {
+    font-weight: 600;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.fs-default {
+    font-size: $fs-default;
+}
+
+.fs-500 {
+    font-size: $fs-500;
+}
+
+.fs-600 {
+    font-size: $fs-600;
+}
+
+.fs-800 {
+    font-size: $fs-800;
+}
+
+.fs-900 {
+    font-size: $fs-900;
+}
+
+.text-light {
+    color: $clr-light;
 }

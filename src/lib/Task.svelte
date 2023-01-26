@@ -1,30 +1,21 @@
 <script lang="ts">
   import type { TaskOBJ } from './TaskOBJ';
+  import type { ProjectOBJ } from './ProjectOBJ';
   import { newTaskOBJ } from './TaskOBJ';
+  import { Update } from './Update';
   import Modal from './Modal.svelte';
 
+  export let project: ProjectOBJ;
   let meta: TaskOBJ = newTaskOBJ();
   let show: boolean = false;
 
   const elements = { title: HTMLElement };
-  $: priorityColor = updatePriorityColor(meta.priority);
-
-  function updatePriorityColor(priority) {
-    switch (priority) {
-      case 'Important':
-        return '#fbc54f';
-      case 'Urgent':
-        return '#ff5582';
-    }
-  }
-
-  function updateIsDone(element) {
-    element.classList.toggle('done');
-  }
+  $: priorityColor = Update.updatePriorityColor(meta.priority);
+  $: isDoneColor = Update.updateisDoneColor(meta.isDone);
 </script>
 
 <article class="task flex">
-  <div class="is-done" />
+  <div class="is-done" style="background-color: {isDoneColor}" />
   <input bind:checked={meta.isDone} on:change={updateIsDone(elements.title)} type="checkbox" />
   <input
     bind:this={elements.title}
@@ -39,7 +30,7 @@
   <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
 {#if show}
-  <Modal bind:meta bind:show />
+  <Modal bind:meta bind:show {project} />
 {/if}
 
 <style lang="scss">
@@ -66,16 +57,19 @@
     border-bottom: 2px solid $bg-light;
 
     .edit {
-      margin-right: auto;
-      width: 2rem;
       opacity: 0.35;
+      width: 2rem;
       transition: rotate 0.25s ease-in-out;
     }
 
     input {
-      font-family: 'Open Sans', sans-serif !important;
+      font-family: 'Futura', sans-serif !important;
       border: none;
       outline: none;
+    }
+
+    input[type='text'] {
+      width: 100%;
     }
 
     div {

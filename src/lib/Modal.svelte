@@ -1,9 +1,11 @@
 <script lang="ts">
+  import type { ProjectOBJ } from './ProjectOBJ';
   import type { TaskOBJ } from './TaskOBJ';
   import { newTaskOBJ } from './TaskOBJ';
   import { onMount } from 'svelte';
   export let meta: TaskOBJ;
   export let show: boolean;
+  export let project: ProjectOBJ;
 
   const temp: TaskOBJ = newTaskOBJ();
 
@@ -22,14 +24,16 @@
 </script>
 
 <div class="modal flow grid">
+  <div class="modal-directory text-light" />
   <div class="modal-buttons">
     <button class="modal-cancel text-light" on:click={() => (show = false)}>Cancel</button>
     <button class="modal-save" on:click={save}>Save</button>
   </div>
   <div>
+    <span class="text-light">Projects\ {project.title}</span>
     <textarea bind:value={temp.title} class="fs-900" />
     <h1 class="fs-500">Notes</h1>
-    <textarea placeholder="Notes..." bind:value={temp.notes} />
+    <textarea placeholder="Notes...✏️" bind:value={temp.notes} />
   </div>
   <div>
     <h2 class="fs-500">Priority</h2>
@@ -51,7 +55,7 @@
     grid-auto-rows: min-content;
     width: clamp(10rem, 30vw, 60rem);
     height: 100vh;
-    padding: 2rem;
+    padding-inline: 2rem;
     background-color: white;
     transform: translateX(0%);
     transition: transform 0.35s ease-in-out;
@@ -59,8 +63,6 @@
 
     &-buttons {
       justify-self: end;
-      right: 2rem;
-      top: 2rem;
     }
 
     &-cancel {
