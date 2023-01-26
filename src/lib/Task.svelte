@@ -1,37 +1,37 @@
 <script lang="ts">
-  export let setActiveTask;
-  export let meta = {
-    isDone: false,
-    title: '',
-    notes: '',
-    priority: 'Normal',
+  import Modal from './Modal.svelte';
+  import type { TaskOBJ } from './TaskOBJ';
+  import { newTaskOBJ } from './TaskOBJ';
+
+  let meta: TaskOBJ = newTaskOBJ();
+  const elements = {
+    title: HTMLInputElement,
   };
 
-  const updateIsDone = (e) => {
-    const _title: HTMLElement = e.target.parentNode.querySelector('input[data-meta="title"]');
-    _title.classList.toggle('done');
-  };
+  let task: HTMLElement;
+  let show: boolean = false;
 
-  const showModal = (e) => {
-    const modal: HTMLElement = document.querySelector('.modal');
-    const task = e.target.parentNode;
-    setActiveTask(task);
-  };
+  function updateIsDone() {
+    elements.title.classList.toggle('done');
+  }
 </script>
 
-<article class="task flex">
+<article class="task flex" bind:this={task}>
   <div class="is-done" />
-  <input bind:checked={meta.isDone} on:change={updateIsDone} data-meta="is-done" type="checkbox" />
+  <input bind:checked={meta.isDone} on:change={updateIsDone} type="checkbox" />
   <input
+    bind:this={elements.title}
     bind:value={meta.title}
-    data-meta="title"
     class="fs-500"
     type="text"
     placeholder="New Task"
   />
   <div class="priority">{meta.priority}</div>
-  <img class="edit" on:click={showModal} src="./edit.svg" alt="Edit Task" />
+  <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
+{#if show}
+  <Modal bind:meta bind:show />
+{/if}
 
 <style lang="scss">
   $status-default: #e0e0e0;
