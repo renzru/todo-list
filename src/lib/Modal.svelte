@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import type { TaskOBJ } from './TaskOBJ';
   import { newTaskOBJ } from './TaskOBJ';
+  import { onMount } from 'svelte';
   export let meta: TaskOBJ;
   export let show: boolean;
 
   const temp: TaskOBJ = newTaskOBJ();
 
   onMount(() => {
-    temp.title = meta.title;
-    temp.notes = meta.notes;
-    temp.priority = meta.priority;
+    for (let property in temp) {
+      temp[property] = meta[property];
+    }
   });
 
   function save() {
+    for (let property in meta) {
+      meta[property] = temp[property];
+    }
     show = false;
-    meta.title = temp.title;
-    meta.notes = temp.notes;
-    meta.priority = temp.priority;
   }
 </script>
 
@@ -35,9 +35,8 @@
     <h2 class="fs-500">Priority</h2>
     <select bind:value={temp.priority}>
       <option value="None">None</option>
-      <option value="Normal">Normal</option>
-      <option value="Urgent">Urgent</option>
       <option value="Important">Important</option>
+      <option value="Urgent">Urgent</option>
     </select>
   </div>
 </div>

@@ -1,24 +1,31 @@
 <script lang="ts">
-  import Modal from './Modal.svelte';
   import type { TaskOBJ } from './TaskOBJ';
   import { newTaskOBJ } from './TaskOBJ';
+  import Modal from './Modal.svelte';
 
   let meta: TaskOBJ = newTaskOBJ();
-  const elements = {
-    title: HTMLInputElement,
-  };
-
-  let task: HTMLElement;
   let show: boolean = false;
 
-  function updateIsDone() {
-    elements.title.classList.toggle('done');
+  const elements = { title: HTMLElement };
+  $: priorityColor = updatePriorityColor(meta.priority);
+
+  function updatePriorityColor(priority) {
+    switch (priority) {
+      case 'Important':
+        return '#fbc54f';
+      case 'Urgent':
+        return '#ff5582';
+    }
+  }
+
+  function updateIsDone(element) {
+    element.classList.toggle('done');
   }
 </script>
 
-<article class="task flex" bind:this={task}>
+<article class="task flex">
   <div class="is-done" />
-  <input bind:checked={meta.isDone} on:change={updateIsDone} type="checkbox" />
+  <input bind:checked={meta.isDone} on:change={updateIsDone(elements.title)} type="checkbox" />
   <input
     bind:this={elements.title}
     bind:value={meta.title}
@@ -26,7 +33,9 @@
     type="text"
     placeholder="New Task"
   />
-  <div class="priority">{meta.priority}</div>
+  {#if meta.priority !== 'None'}
+    <div class="priority" style="background-color: {priorityColor}">{meta.priority}</div>
+  {/if}
   <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
 {#if show}
