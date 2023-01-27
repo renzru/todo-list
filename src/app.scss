@@ -5,18 +5,31 @@ $clr-light: #cfcfcf;
 $bg-light: #f6f6f6;
 $bg-white: white;
 
-$fs-default: 1rem;
-$fs-500: 1.15rem;
-$fs-600: 1.75rem;
-$fs-700: 1.85rem;
-$fs-800: 2rem;
-$fs-900: 2.5rem;
+:root {
+    --fs-default: 0.5rem;
+    --fs-500: 0.75rem;
+    --fs-600: 0.95rem;
+    --fs-700: 1rem;
+    --fs-800: 1.25rem;
+    --fs-900: 1.5rem;
+}
 
 /* Box Sizing */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
+}
+
+@media screen and (min-width: 40em) {
+    :root {
+        --fs-default: 1rem;
+        --fs-500: 1.15rem;
+        --fs-600: 1.75rem;
+        --fs-700: 1.85rem;
+        --fs-800: 2rem;
+        --fs-900: 2.5rem;
+    }
 }
 
 /* Margins */
@@ -108,23 +121,23 @@ body {
 }
 
 .fs-default {
-    font-size: $fs-default;
+    font-size: var(--fs-default);
 }
 
 .fs-500 {
-    font-size: $fs-500;
+    font-size: var(--fs-500);
 }
 
 .fs-600 {
-    font-size: $fs-600;
+    font-size: var(--fs-600);
 }
 
 .fs-800 {
-    font-size: $fs-800;
+    font-size: var(--fs-800);
 }
 
 .fs-900 {
-    font-size: $fs-900;
+    font-size: var(--fs-900);
 }
 
 .text-light {

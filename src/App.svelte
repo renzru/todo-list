@@ -9,6 +9,6 @@
 <style lang="scss">
   main {
     display: grid;
-    grid-template-columns: minmax(2rem, 1fr) minmax(0, 80rem) minmax(2rem, 1fr);
+    grid-template-columns: minmax(2rem, 1fr) minmax(0, 40rem) minmax(2rem, 1fr);
   }
 </style>

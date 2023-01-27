@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { TaskOBJ } from './TaskOBJ';
   import type { ProjectOBJ } from './ProjectOBJ';
+  import { fly } from 'svelte/transition';
   import { newTaskOBJ } from './TaskOBJ';
   import { Update } from './Update';
   import Modal from './Modal.svelte';
@@ -9,6 +10,9 @@
   let meta: TaskOBJ = newTaskOBJ();
   let show: boolean = false;
 
+  function showModal() {
+    show = !show;
+  }
   const elements = { title: HTMLElement };
   $: priorityColor = Update.updatePriorityColor(meta.priority);
   $: isDoneColor = Update.updateisDoneColor(meta.isDone);
@@ -16,7 +20,11 @@
 
 <article class="task flex">
   <div class="is-done" style="background-color: {isDoneColor}" />
-  <input bind:checked={meta.isDone} on:change={updateIsDone(elements.title)} type="checkbox" />
+  <input
+    bind:checked={meta.isDone}
+    on:change={Update.updateIsDone(elements.title)}
+    type="checkbox"
+  />
   <input
     bind:this={elements.title}
     bind:value={meta.title}
@@ -25,10 +33,20 @@
     placeholder="New Task"
   />
   {#if meta.priority !== 'None'}
-    <div class="priority" style="background-color: {priorityColor}">{meta.priority}</div>
+    {#key meta.priority}
+      <div
+        class="priority fs-500"
+        style="background-color: {priorityColor}"
+        transition:fly={{ x: -100, duration: 600 }}
+      >
+        {meta.priority}
+      </div>
+    {/key}
   {/if}
-  <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
+
+  <img on:click={showModal} class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
+
 {#if show}
   <Modal bind:meta bind:show {project} />
 {/if}
@@ -53,6 +71,7 @@
     position: relative;
     align-items: center;
     gap: 1rem;
+    height: 2.75rem;
     border-radius: 0.2rem;
     border-bottom: 2px solid $bg-light;
 
@@ -74,7 +93,10 @@
 
     div {
       &.is-done {
-        width: clamp(8px, 2.5%, 10px);
+        position: absolute;
+        left: 0;
+        z-index: -1;
+        width: clamp(1.35rem, 1%, 3rem);
         height: 100%;
         border-radius: 0.2rem 0 0 0.2rem;
         background-color: $status-default;

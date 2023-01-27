@@ -2,10 +2,12 @@
   import type { ProjectOBJ } from './ProjectOBJ';
   import type { TaskOBJ } from './TaskOBJ';
   import { newTaskOBJ } from './TaskOBJ';
+  import { fly } from 'svelte/transition';
   import { onMount } from 'svelte';
   export let meta: TaskOBJ;
   export let show: boolean;
   export let project: ProjectOBJ;
+  import { quartOut } from 'svelte/easing';
 
   const temp: TaskOBJ = newTaskOBJ();
 
@@ -23,7 +25,10 @@
   }
 </script>
 
-<div class="modal flow grid">
+<div
+  class="modal flow grid"
+  transition:fly={{ x: 600, opacity: 1, duration: 450, easing: quartOut }}
+>
   <div class="modal-directory text-light" />
   <div class="modal-buttons">
     <button class="modal-cancel text-light" on:click={() => (show = false)}>Cancel</button>
