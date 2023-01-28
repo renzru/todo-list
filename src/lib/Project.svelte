@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { TaskOBJ } from './TaskOBJ';
   import type { ProjectOBJ } from './ProjectOBJ';
   import { newTaskOBJ } from './TaskOBJ';
   import Task from './Task.svelte';
@@ -9,8 +8,14 @@
     list: [],
   };
 
+  $: console.log(project.list);
+
   function addTask() {
     project.list = [...project.list, newTaskOBJ()];
+  }
+
+  function removeTask(event) {
+    project.list = project.list.filter((task) => task.id !== event.detail);
   }
 </script>
 
@@ -23,7 +28,7 @@
 
   <!-- Tasks -->
   {#each project.list as task}
-    <Task {project} bind:meta={task} />
+    <Task {project} bind:meta={task} on:remove={removeTask} />
   {/each}
 </section>
 

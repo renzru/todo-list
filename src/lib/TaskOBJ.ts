@@ -3,6 +3,7 @@ type TaskOBJ = {
     title: string;
     notes: string;
     priority: string;
+    id: string;
 } 
 
 function newTaskOBJ():TaskOBJ {
@@ -11,6 +12,7 @@ function newTaskOBJ():TaskOBJ {
         title: '',
         notes: '',
         priority: 'None',
+        id: (Math.random()*Date.now()).toString(32).substring(0, 8)
     }
 }
 

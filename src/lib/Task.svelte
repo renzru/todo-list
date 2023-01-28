@@ -1,13 +1,16 @@
 <script lang="ts">
-  import type { TaskOBJ } from './TaskOBJ';
   import type { ProjectOBJ } from './ProjectOBJ';
+  import type { TaskOBJ } from './TaskOBJ';
 
-  import { Animate } from './Animate';
+  import { createEventDispatcher } from 'svelte';
   import { fly } from 'svelte/transition';
+  import { Animate } from './Animate';
   import Modal from './Modal.svelte';
+
   export let project: ProjectOBJ;
   export let meta: TaskOBJ;
   let show: boolean = false;
+  let dispatch = createEventDispatcher();
 
   const elements = { title: HTMLElement };
   $: priorityColor = Animate.swapPriority(meta.priority);
@@ -47,6 +50,8 @@
     {/key}
   {/if}
 
+  <!-- Remove Button -->
+  <button on:click={() => dispatch('remove', meta.id)}>X</button>
   <!-- Edit Button -->
   <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
 </li>
