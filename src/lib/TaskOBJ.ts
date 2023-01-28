@@ -5,7 +5,7 @@ type TaskOBJ = {
     priority: string;
 } 
 
-function newTaskOBJ() {
+function newTaskOBJ():TaskOBJ {
     return {
         isDone: false,
         title: '',

@@ -26,7 +26,7 @@
 </script>
 
 <div
-  class="modal flow grid"
+  class="modal flow grid bg-white"
   transition:fly={{ x: 600, opacity: 1, duration: 450, easing: quartOut }}
 >
   <!-- Action Buttons -->

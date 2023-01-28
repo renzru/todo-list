@@ -1,13 +1,12 @@
 <script lang="ts">
   import type { TaskOBJ } from './TaskOBJ';
   import type { ProjectOBJ } from './ProjectOBJ';
-  import { newTaskOBJ } from './TaskOBJ';
+
   import { Animate } from './Animate';
   import { fly } from 'svelte/transition';
   import Modal from './Modal.svelte';
   export let project: ProjectOBJ;
-
-  let meta: TaskOBJ = newTaskOBJ();
+  export let meta: TaskOBJ;
   let show: boolean = false;
 
   const elements = { title: HTMLElement };
@@ -15,7 +14,7 @@
   $: isDoneColor = Animate.swapIsDone(meta.isDone);
 </script>
 
-<article class="task flex">
+<article class="task flex" in:fly={{ y: 100, duration: 450 }}>
   <!-- isDone Indicator -->
   <div class="is-done" style="background-color: {isDoneColor}" />
 
@@ -32,7 +31,7 @@
     bind:value={meta.title}
     class="fs-500"
     type="text"
-    placeholder="New Task"
+    placeholder="New Task..."
   />
 
   <!-- Priority -->
