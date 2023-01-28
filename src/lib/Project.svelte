@@ -9,10 +9,13 @@
 </script>
 
 <section class="project grid">
-  <div class="project-heading flex">
+  <!-- Project Header -->
+  <div class="project-header flex">
     <h1 class="fs-900 bold">{project.title}</h1>
     <button class="add-task">+</button>
   </div>
+
+  <!-- Tasks -->
   <Task {project} />
   <Task {project} />
 </section>
@@ -22,7 +25,7 @@
     grid-column: 2;
     gap: 0.2rem;
 
-    &-heading {
+    &-header {
       align-items: center;
       gap: 1.5rem;
       margin-block: 3rem 2rem;

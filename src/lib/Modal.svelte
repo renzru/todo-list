@@ -29,18 +29,24 @@
   class="modal flow grid"
   transition:fly={{ x: 600, opacity: 1, duration: 450, easing: quartOut }}
 >
-  <div class="modal-directory text-light" />
+  <!-- Action Buttons -->
   <div class="modal-buttons">
     <button class="modal-cancel text-light" on:click={() => (show = false)}>Cancel</button>
     <button class="modal-save" on:click={save}>Save</button>
   </div>
+
   <div>
+    <!-- Directory Text -->
     <span class="text-light">Projects\ {project.title}</span>
+
+    <!-- Edit Task Title -->
     <textarea bind:value={temp.title} class="fs-900" />
+
+    <!-- Edit Task Notes -->
     <h1 class="fs-500">Notes</h1>
     <textarea placeholder="Notes...✏️" bind:value={temp.notes} />
-  </div>
-  <div>
+
+    <!-- Edit Task Priority -->
     <h2 class="fs-500">Priority</h2>
     <select bind:value={temp.priority}>
       <option value="None">None</option>

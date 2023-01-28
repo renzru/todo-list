@@ -2,26 +2,31 @@
   import type { TaskOBJ } from './TaskOBJ';
   import type { ProjectOBJ } from './ProjectOBJ';
   import { newTaskOBJ } from './TaskOBJ';
-  import { Update } from './Update';
+  import { Animate } from './Animate';
   import { fly } from 'svelte/transition';
   import Modal from './Modal.svelte';
-
   export let project: ProjectOBJ;
+
   let meta: TaskOBJ = newTaskOBJ();
   let show: boolean = false;
 
   const elements = { title: HTMLElement };
-  $: priorityColor = Update.updatePriorityColor(meta.priority);
-  $: isDoneColor = Update.updateisDoneColor(meta.isDone);
+  $: priorityColor = Animate.swapPriority(meta.priority);
+  $: isDoneColor = Animate.swapIsDone(meta.isDone);
 </script>
 
 <article class="task flex">
+  <!-- isDone Indicator -->
   <div class="is-done" style="background-color: {isDoneColor}" />
+
+  <!-- isDone Checkbox -->
   <input
     bind:checked={meta.isDone}
-    on:change={Update.updateIsDone(elements.title)}
+    on:change={Animate.strikeThrough(elements.title)}
     type="checkbox"
   />
+
+  <!-- Title  -->
   <input
     bind:this={elements.title}
     bind:value={meta.title}
@@ -29,6 +34,8 @@
     type="text"
     placeholder="New Task"
   />
+
+  <!-- Priority -->
   {#if meta.priority !== 'None'}
     {#key meta.priority}
       <div
@@ -41,9 +48,11 @@
     {/key}
   {/if}
 
+  <!-- Edit Button -->
   <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
 
+<!-- Editing Modal -->
 {#if show}
   <Modal bind:meta bind:show {project} />
 {/if}

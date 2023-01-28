@@ -1,14 +1,14 @@
 
-class Update {
-    static updateisDoneColor(isDone: boolean): string {
+class Animate {
+    static swapIsDone(isDone: boolean): string {
         if (isDone) {
-          return 'var(--status-default)';
-        } else {
           return 'var(--status-completed)';
+        } else {
+          return 'var(--status-default)';
         }
       }
     
-      static updatePriorityColor(priority: string): string {
+      static swapPriority(priority: string): string {
         switch (priority) {
           case 'Important':
             return 'var(--priority-important)';
@@ -19,9 +19,9 @@ class Update {
         }
       }
     
-      static updateIsDone(element: HTMLElement): void {
+      static strikeThrough(element: HTMLElement): void {
         element.classList.toggle('done');
       }
 }
 
-export {Update}
+export {Animate}
