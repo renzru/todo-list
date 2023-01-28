@@ -14,7 +14,7 @@
   $: isDoneColor = Animate.swapIsDone(meta.isDone);
 </script>
 
-<article class="task flex" in:fly={{ y: 100, duration: 450 }}>
+<li class="task flex" in:fly={{ y: 100, duration: 450 }}>
   <!-- isDone Indicator -->
   <div class="is-done" style="background-color: {isDoneColor}" />
 
@@ -49,7 +49,7 @@
 
   <!-- Edit Button -->
   <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
-</article>
+</li>
 
 <!-- Editing Modal -->
 {#if show}
