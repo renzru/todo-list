@@ -1,11 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
 
-$clr-dark: #252525;
-$clr-light: #cfcfcf;
-$bg-light: #f6f6f6;
-$bg-white: white;
+
 
 :root {
+    --clr-dark: #252525;
+    --clr-light: #cfcfcf;
+    --bg-light: #f6f6f6;
+    --bg-white: white;
+
+    --status-default: #e0e0e0;
+    --status-completed: #73eca6;
+    --priority-normal: #4879ff;
+    --priority-important: #fbc54f;
+    --priority-urgent: #ff5582;
+
     --fs-default: 0.5rem;
     --fs-500: 0.75rem;
     --fs-600: 0.95rem;
@@ -141,5 +149,5 @@ body {
 }
 
 .text-light {
-    color: $clr-light;
+    color: var(--clr-light);
 }

@@ -61,7 +61,6 @@
     width: clamp(10rem, 30vw, 60rem);
     height: 100vh;
     padding-inline: 2rem;
-    background-color: white;
     transform: translateX(0%);
     transition: transform 0.35s ease-in-out;
     box-shadow: 0 0 1px rgb(0, 0, 0, 0.5);
@@ -90,7 +89,7 @@
     textarea {
       resize: vertical;
       padding-block: 1rem;
-      border-bottom: 1px solid $clr-light;
+      border-bottom: 1px solid var(--clr-light);
     }
 
     select {

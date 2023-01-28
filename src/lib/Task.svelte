@@ -1,18 +1,15 @@
 <script lang="ts">
   import type { TaskOBJ } from './TaskOBJ';
   import type { ProjectOBJ } from './ProjectOBJ';
-  import { fly } from 'svelte/transition';
   import { newTaskOBJ } from './TaskOBJ';
   import { Update } from './Update';
+  import { fly } from 'svelte/transition';
   import Modal from './Modal.svelte';
 
   export let project: ProjectOBJ;
   let meta: TaskOBJ = newTaskOBJ();
   let show: boolean = false;
 
-  function showModal() {
-    show = !show;
-  }
   const elements = { title: HTMLElement };
   $: priorityColor = Update.updatePriorityColor(meta.priority);
   $: isDoneColor = Update.updateisDoneColor(meta.isDone);
@@ -44,7 +41,7 @@
     {/key}
   {/if}
 
-  <img on:click={showModal} class="edit" src="./edit.svg" alt="Edit Task" />
+  <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
 </article>
 
 {#if show}
@@ -52,19 +49,13 @@
 {/if}
 
 <style lang="scss">
-  $status-default: #e0e0e0;
-  $status-completed: #73eca6;
-  $priority-normal: #4879ff;
-  $priority-important: #fbc54f;
-  $priority-urgent: #ff5582;
-
   :is(.done) {
-    color: $clr-light;
+    color: var(--clr-light);
     text-decoration: line-through;
   }
 
   ::placeholder {
-    color: $clr-light;
+    color: var(--clr-light);
   }
 
   .task {
@@ -73,7 +64,7 @@
     gap: 1rem;
     height: 2.75rem;
     border-radius: 0.2rem;
-    border-bottom: 2px solid $bg-light;
+    border-bottom: 2px solid var(--bg-light);
 
     .edit {
       opacity: 0.35;
@@ -99,7 +90,7 @@
         width: clamp(1.35rem, 1%, 3rem);
         height: 100%;
         border-radius: 0.2rem 0 0 0.2rem;
-        background-color: $status-default;
+        background-color: var(--status-default);
       }
 
       &.priority {
@@ -109,7 +100,6 @@
         text-align: center;
         white-space: nowrap;
         border-radius: 0.35rem;
-        background-color: $priority-normal;
       }
     }
   }

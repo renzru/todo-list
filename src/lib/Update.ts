@@ -2,18 +2,18 @@
 class Update {
     static updateisDoneColor(isDone: boolean): string {
         if (isDone) {
-          return '#73eca6';
+          return 'var(--status-default)';
         } else {
-          return '#e0e0e0';
+          return 'var(--status-completed)';
         }
       }
     
       static updatePriorityColor(priority: string): string {
         switch (priority) {
           case 'Important':
-            return '#fbc54f';
+            return 'var(--priority-important)';
           case 'Urgent':
-            return '#ff5582';
+            return 'var(--priority-urgent)';
          default: 
             return '';
         }

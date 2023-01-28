@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Task from './Task.svelte';
   import type { ProjectOBJ } from './ProjectOBJ';
+  import Task from './Task.svelte';
 
   let project: ProjectOBJ = {
     title: 'Home ',
@@ -27,7 +27,7 @@
       gap: 1.5rem;
       margin-block: 3rem 2rem;
       padding-bottom: 2rem;
-      border-bottom: 2px solid $bg-light;
+      border-bottom: 2px solid var(--bg-light);
 
       .add-task {
         padding: 0;
