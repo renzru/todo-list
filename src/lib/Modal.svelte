@@ -2,32 +2,37 @@
   import type { ProjectOBJ } from './ProjectOBJ';
   import type { TaskOBJ } from './TaskOBJ';
   import { newTaskOBJ } from './TaskOBJ';
-  import { fly } from 'svelte/transition';
+
+  import { createEventDispatcher } from 'svelte';
+  import { quartOut } from 'svelte/easing';
+  import { fly, fade } from 'svelte/transition';
   import { onMount } from 'svelte';
-  export let meta: TaskOBJ;
+
+  export let currentMeta: TaskOBJ;
   export let show: boolean;
   export let project: ProjectOBJ;
-  import { quartOut } from 'svelte/easing';
 
   const temp: TaskOBJ = newTaskOBJ();
+  let dispatch = createEventDispatcher();
 
   onMount(() => {
     for (let property in temp) {
-      temp[property] = meta[property];
+      temp[property] = currentMeta[property];
     }
   });
 
   function save() {
-    for (let property in meta) {
-      meta[property] = temp[property];
+    for (let property in currentMeta) {
+      currentMeta[property] = temp[property];
     }
     show = false;
+    dispatch('save');
   }
 </script>
 
 <div
   class="modal flow grid bg-white"
-  transition:fly={{ x: 600, opacity: 1, duration: 450, easing: quartOut }}
+  transition:fly={{ x: 800, opacity: 1, duration: 500, easing: quartOut }}
 >
   <!-- Action Buttons -->
   <div class="modal-buttons">
@@ -50,13 +55,25 @@
     <h2 class="fs-500">Priority</h2>
     <select bind:value={temp.priority}>
       <option value="None">None</option>
+      <option value="Normal">Normal</option>
       <option value="Important">Important</option>
       <option value="Urgent">Urgent</option>
     </select>
   </div>
 </div>
+<!-- Backdrop for Contrast -->
+<div class="backdrop" transition:fade={{ duration: 400, easing: quartOut }} />
 
 <style lang="scss">
+  .backdrop {
+    content: '';
+    position: absolute;
+    opacity: 0.3;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+  }
+
   .modal {
     z-index: 1000;
     position: absolute;

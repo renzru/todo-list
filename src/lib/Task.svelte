@@ -3,70 +3,40 @@
   import type { TaskOBJ } from './TaskOBJ';
 
   import { createEventDispatcher } from 'svelte';
-  import { fly } from 'svelte/transition';
+  import { fly, fade } from 'svelte/transition';
   import { Animate } from './Animate';
-  import Modal from './Modal.svelte';
 
   export let project: ProjectOBJ;
   export let meta: TaskOBJ;
-  let show: boolean = false;
+
   let dispatch = createEventDispatcher();
 
-  const elements = { title: HTMLElement };
   $: priorityColor = Animate.swapPriority(meta.priority);
-  $: isDoneColor = Animate.swapIsDone(meta.isDone);
 </script>
 
 <li class="task flex" in:fly={{ y: 100, duration: 450 }}>
-  <!-- isDone Indicator -->
-  <div class="is-done" style="background-color: {isDoneColor}" />
-
   <!-- isDone Checkbox -->
-  <input
-    bind:checked={meta.isDone}
-    on:change={Animate.strikeThrough(elements.title)}
-    type="checkbox"
-  />
+  <input bind:checked={meta.isDone} on:change={() => dispatch('remove', meta.id)} type="checkbox" />
 
   <!-- Title  -->
-  <input
-    bind:this={elements.title}
-    bind:value={meta.title}
-    class="fs-500"
-    type="text"
-    placeholder="New Task..."
-  />
+  <input bind:value={meta.title} class="fs-500" type="text" placeholder="New Task..." />
 
   <!-- Priority -->
-  {#if meta.priority !== 'None'}
-    {#key meta.priority}
-      <div
-        class="priority fs-500"
-        style="background-color: {priorityColor}"
-        transition:fly={{ x: -100, duration: 600 }}
-      >
-        {meta.priority}
-      </div>
-    {/key}
-  {/if}
+  {#key meta.priority}
+    <div
+      class="priority fs-500"
+      style="background-color: {priorityColor}"
+      transition:fade={{ duration: 300 }}
+    />
+  {/key}
 
-  <!-- Remove Button -->
-  <button on:click={() => dispatch('remove', meta.id)}>X</button>
+  <!-- Remove Button
+  <button on:click={() => dispatch('remove', meta.id)}>X</button> -->
   <!-- Edit Button -->
-  <img on:click={() => (show = !show)} class="edit" src="./edit.svg" alt="Edit Task" />
+  <img on:click={() => dispatch('showModal', meta)} class="edit" src="./edit.svg" alt="Edit Task" />
 </li>
 
-<!-- Editing Modal -->
-{#if show}
-  <Modal bind:meta bind:show {project} />
-{/if}
-
 <style lang="scss">
-  :is(.done) {
-    color: var(--clr-light);
-    text-decoration: line-through;
-  }
-
   ::placeholder {
     color: var(--clr-light);
   }
@@ -78,7 +48,12 @@
     height: 2.75rem;
     border-radius: 0.2rem;
     border-bottom: 2px solid var(--bg-light);
+    transition: transform 0.45s ease, outline 0.25s ease;
 
+    &:hover {
+      transform: scale(1.005);
+      outline: 0.75px solid #97bde5;
+    }
     .edit {
       opacity: 0.35;
       width: 2rem;
@@ -92,27 +67,19 @@
     }
 
     input[type='text'] {
+      position: relative;
       width: 100%;
     }
 
     div {
-      &.is-done {
+      &.priority {
         position: absolute;
         left: 0;
         z-index: -1;
         width: clamp(1.35rem, 1%, 3rem);
         height: 100%;
         border-radius: 0.2rem 0 0 0.2rem;
-        background-color: var(--status-default);
-      }
-
-      &.priority {
-        width: 8rem;
-        padding: 0.35rem 1rem;
-        color: white;
-        text-align: center;
-        white-space: nowrap;
-        border-radius: 0.35rem;
+        background-color: var(--priority-default);
       }
     }
   }

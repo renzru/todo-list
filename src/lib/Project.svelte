@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ProjectOBJ } from './ProjectOBJ';
-  import { newTaskOBJ } from './TaskOBJ';
+  import { newTaskOBJ, TaskOBJ } from './TaskOBJ';
+  import Modal from './Modal.svelte';
   import Task from './Task.svelte';
 
   let project: ProjectOBJ = {
@@ -9,6 +10,7 @@
   };
 
   $: console.log(project.list);
+  $: console.log(currentMeta);
 
   function addTask() {
     project.list = [...project.list, newTaskOBJ()];
@@ -16,6 +18,18 @@
 
   function removeTask(event) {
     project.list = project.list.filter((task) => task.id !== event.detail);
+  }
+
+  let currentMeta: TaskOBJ;
+  let show: boolean = false;
+
+  function showModal(event) {
+    show = !show;
+    currentMeta = event.detail;
+  }
+
+  function refresh() {
+    project.list = project.list;
   }
 </script>
 
@@ -28,9 +42,13 @@
 
   <!-- Tasks -->
   {#each project.list as task}
-    <Task {project} bind:meta={task} on:remove={removeTask} />
+    <Task {project} bind:meta={task} on:remove={removeTask} on:showModal={showModal} />
   {/each}
 </section>
+
+{#if show}
+  <Modal bind:currentMeta bind:show {project} on:save={refresh} />
+{/if}
 
 <style lang="scss">
   .project {

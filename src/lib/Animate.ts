@@ -1,26 +1,16 @@
 
-class Animate {
-    static swapIsDone(isDone: boolean): string {
-        if (isDone) {
-          return 'var(--status-completed)';
-        } else {
-          return 'var(--status-default)';
-        }
-      }
-    
+class Animate {    
       static swapPriority(priority: string): string {
         switch (priority) {
+          case 'Normal': 
+             return 'var(--priority-normal)';
           case 'Important':
             return 'var(--priority-important)';
           case 'Urgent':
             return 'var(--priority-urgent)';
-         default: 
-            return '';
+          default:
+            return 'var(--priority-default)';
         }
-      }
-    
-      static strikeThrough(element: HTMLElement): void {
-        element.classList.toggle('done');
       }
 }
 

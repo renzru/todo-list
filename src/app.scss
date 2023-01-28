@@ -8,8 +8,7 @@
     --bg-light: #f6f6f6;
     --bg-white: white;
 
-    --status-default: #e0e0e0;
-    --status-completed: #73eca6;
+    --priority-default: #eeeeee;
     --priority-normal: #4879ff;
     --priority-important: #fbc54f;
     --priority-urgent: #ff5582;
@@ -150,4 +149,8 @@ body {
 
 .text-light {
     color: var(--clr-light);
+}
+
+.bg-white {
+    background-color: var(--bg-white);
 }
