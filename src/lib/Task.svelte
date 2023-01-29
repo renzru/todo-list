@@ -23,7 +23,7 @@
   <input bind:checked={meta.isDone} on:change={() => dispatch('remove', meta.id)} type="checkbox" />
 
   <!-- Title  -->
-  <input bind:value={meta.title} class="fs-500" type="text" placeholder="New Task..." />
+  <input bind:value={meta.title} class="fs-500 text-input" type="text" placeholder="New Task..." />
 
   <!-- Priority -->
   {#key meta.priority}
@@ -54,6 +54,9 @@
     border-bottom: 2px solid var(--bg-light);
     transition: transform 0.45s ease, outline 0.25s ease;
 
+    &:has(:focus) {
+      outline: 0.75px solid #97bde5;
+    }
     &:hover {
       transform: scale(1.005);
       outline: 0.75px solid #97bde5;
@@ -65,9 +68,7 @@
     }
 
     input {
-      font-family: 'Futura', sans-serif !important;
-      border: none;
-      outline: none;
+      height: 100%;
     }
 
     input[type='text'] {

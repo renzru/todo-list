@@ -33,7 +33,12 @@
 <section class="project grid">
   <!-- Project Header -->
   <div class="project-header flex">
-    <input class="fs-900 bold" bind:value={project.title} type="text" placeholder="Untitled..." />
+    <input
+      class="fs-600 medium text-input"
+      bind:value={project.title}
+      type="text"
+      placeholder="Untitled..."
+    />
     <button class="add-task" on:click={addTask}>+</button>
   </div>
 
@@ -54,20 +59,17 @@
 
   .project {
     grid-area: project;
+    grid-auto-rows: min-content;
+    justify-self: center;
     gap: 0.2rem;
 
     &-header {
       align-items: center;
       justify-content: space-between;
-      gap: 1.5rem;
+      gap: clamp(2rem, 15vw, 20rem);
       margin-block: 3rem 2rem;
       padding-bottom: 2rem;
       border-bottom: 2px solid var(--bg-light);
-
-      input {
-        border: unset;
-        outline: unset;
-      }
 
       .add-task {
         padding: 0;
