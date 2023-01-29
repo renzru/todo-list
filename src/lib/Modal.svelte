@@ -67,7 +67,7 @@
 <style lang="scss">
   .backdrop {
     content: '';
-    position: absolute;
+    position: fixed;
     opacity: 0.3;
     width: 100%;
     height: 100%;
@@ -76,7 +76,7 @@
 
   .modal {
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     right: 0;
