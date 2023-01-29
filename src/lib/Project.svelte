@@ -53,7 +53,7 @@
   }
 
   .project {
-    grid-column: 2;
+    grid-area: project;
     gap: 0.2rem;
 
     &-header {
