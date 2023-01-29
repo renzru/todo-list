@@ -14,19 +14,21 @@
 </aside>
 
 <style lang="scss">
-  // Utilities
+  // Components
   .sidebar-heading {
     border-bottom: 1px solid var(--bg-light);
   }
 
+  .sidebar-link {
+    transition: background 0.25s ease;
+  }
   .sidebar-link:hover {
     background-color: #f7f8ff;
-    outline: 0.75px solid #c7e1ff;
+    outline: 0.5px solid #c7e1ff;
   }
 
   aside {
     position: fixed;
-    z-index: 2000;
     grid-auto-rows: min-content;
     height: 100%;
     width: 100%;
