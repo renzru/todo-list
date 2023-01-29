@@ -14,11 +14,7 @@
   $: priorityColor = Animate.swapPriority(meta.priority);
 </script>
 
-<li
-  class="task flex"
-  in:fly={{ x: -100, y: 50, duration: 450 }}
-  out:fly={{ x: 100, duration: 450 }}
->
+<li class="task flex" in:fly={{ x: -100, y: 50, duration: 450 }}>
   <!-- isDone Checkbox -->
   <input bind:checked={meta.isDone} on:change={() => dispatch('remove', meta.id)} type="checkbox" />
 

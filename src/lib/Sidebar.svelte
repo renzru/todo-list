@@ -1,4 +1,9 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+  import { fly } from 'svelte/transition';
+
+  const dispatch = createEventDispatcher();
+  export let projectStorage: object;
 </script>
 
 <aside class="grid flow">
@@ -8,7 +13,15 @@
       <img src="./project.svg" />Projects
     </h2>
     <ul>
-      <li class="sidebar-link">Home</li>
+      {#each projectStorage as project (project)}
+        <li
+          class="fs-default sidebar-link"
+          on:click={() => dispatch('loadTask', project)}
+          in:fly={{ y: 20, duration: 350 }}
+        >
+          {project.title}
+        </li>
+      {/each}
     </ul>
   </section>
 </aside>
@@ -19,9 +32,6 @@
     border-bottom: 1px solid var(--bg-light);
   }
 
-  .sidebar-link {
-    transition: background 0.25s ease;
-  }
   .sidebar-link:hover {
     background-color: #f7f8ff;
     outline: 0.5px solid #c7e1ff;
@@ -29,10 +39,13 @@
 
   aside {
     position: fixed;
+    z-index: 500;
     grid-auto-rows: min-content;
     height: 100%;
     width: 100%;
     padding-block: 0.8rem;
+    background-color: white;
+    transform: translateY(100%);
     box-shadow: 0.45px 0 1px rgb(0, 0, 0, 0.5);
 
     > * {
@@ -47,6 +60,7 @@
         align-items: center;
 
         img {
+          aspect-ratio: 1;
           width: 1em;
           height: 1rem;
         }
@@ -67,6 +81,7 @@
       left: 0;
       width: 20rem;
       justify-self: start;
+      transform: translateY(0);
     }
   }
 </style>

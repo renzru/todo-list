@@ -1,13 +1,16 @@
 <script lang="ts">
   import type { ProjectOBJ } from './ProjectOBJ';
   import { newTaskOBJ, TaskOBJ } from './TaskOBJ';
+  import { createEventDispatcher } from 'svelte';
   import Modal from './Modal.svelte';
   import Task from './Task.svelte';
 
-  let project: ProjectOBJ = {
+  export let project: ProjectOBJ = {
     title: 'Home ',
     list: [],
   };
+
+  const dispatch = createEventDispatcher();
 
   function addTask() {
     project.list = [...project.list, newTaskOBJ()];
@@ -35,6 +38,7 @@
   <div class="project-header flex">
     <input
       class="fs-600 medium text-input"
+      on:change={dispatch('editProject', project)}
       bind:value={project.title}
       type="text"
       placeholder="Untitled..."
