@@ -12,6 +12,7 @@
 
   const dispatch = createEventDispatcher();
 
+  export let temp = newTaskOBJ();
   function addTask() {
     project.list = [...project.list, newTaskOBJ()];
   }
@@ -62,7 +63,6 @@
   }
 
   .project {
-    grid-area: project;
     grid-auto-rows: min-content;
     justify-self: center;
     gap: 0.2rem;
@@ -70,7 +70,6 @@
     &-header {
       align-items: center;
       justify-content: space-between;
-      gap: clamp(2rem, 15vw, 20rem);
       margin-block: 3rem 2rem;
       padding-bottom: 2rem;
       border-bottom: 2px solid var(--bg-light);

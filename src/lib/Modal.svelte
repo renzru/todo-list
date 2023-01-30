@@ -68,16 +68,19 @@
   .backdrop {
     content: '';
     position: fixed;
+    z-index: 500;
     opacity: 0.3;
     width: 100%;
     height: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: black;
   }
 
   .modal {
     z-index: 1000;
     position: fixed;
-    top: 0;
     bottom: 0;
     right: 0;
     grid-auto-rows: min-content;

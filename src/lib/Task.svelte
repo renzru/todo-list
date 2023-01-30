@@ -37,10 +37,6 @@
 </li>
 
 <style lang="scss">
-  ::placeholder {
-    color: var(--clr-light);
-  }
-
   .task {
     position: relative;
     align-items: center;
