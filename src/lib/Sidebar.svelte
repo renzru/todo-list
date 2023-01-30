@@ -14,13 +14,14 @@
     </h2>
     <ul>
       {#each projectStorage as project (project)}
-        <li
-          class="fs-default sidebar-link"
-          on:click={() => dispatch('loadTask', project)}
+        <input
+          value={project.title}
+          class="fs-default sidebar-link text-input"
+          placeholder="Untitled..."
           in:fly={{ y: 20, duration: 350 }}
-        >
-          {project.title}
-        </li>
+          on:click={() => dispatch('loadTask', project)}
+          readonly
+        />
       {/each}
     </ul>
   </section>
@@ -69,8 +70,11 @@
       ul {
         padding: unset;
 
-        li {
+        input {
+          cursor: default;
+          width: 100%;
           padding: 0.25rem 0.8rem;
+          background-color: unset;
         }
       }
     }

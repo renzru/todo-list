@@ -10,7 +10,7 @@
 
   function newProject() {
     const project: ProjectOBJ = {
-      title: 'Untitled',
+      title: '',
       list: [],
     };
 
@@ -22,6 +22,7 @@
   }
 
   // TODO: Fix buggy animations on project switch;
+  // TODO: Fix bug when project in sidebar collapses when title is ''
   function refreshStore() {
     // #each blocks don't update on mutation, only on reassignment.
     // This has to be done so the sidebar refreshes on project title edit.
