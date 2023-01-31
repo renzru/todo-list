@@ -44,7 +44,7 @@
       type="text"
       placeholder="Untitled..."
     />
-    <button class="add-task" on:click={addTask}>+</button>
+    <button class="add-task-btn" on:click={addTask}>+</button>
   </div>
 
   <!-- Tasks -->
@@ -58,10 +58,6 @@
 {/if}
 
 <style lang="scss">
-  ::placeholder {
-    color: var(--clr-light);
-  }
-
   .project {
     grid-auto-rows: min-content;
     justify-self: center;
@@ -74,11 +70,9 @@
       padding-bottom: 2rem;
       border-bottom: 2px solid var(--bg-light);
 
-      .add-task {
+      button {
         padding: 0;
         height: 60%;
-        border-radius: 0.2rem;
-        aspect-ratio: 1;
       }
     }
   }

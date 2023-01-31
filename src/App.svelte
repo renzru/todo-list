@@ -61,7 +61,10 @@
 
     <!-- Add Task -->
     <div class="add-task-container flex">
-      <button on:click={addTask} />
+      <!-- Button -->
+
+      <button class="add-task-btn" on:click={addTask} />
+      <!-- Text Input -->
       <input
         bind:value={temp.title}
         on:keydown={handleKey}
@@ -80,7 +83,8 @@
   $container-width: clamp(20rem, 40vw, 40rem);
 
   .add-task-container {
-    position: static;
+    position: relative;
+    align-items: center;
     gap: clamp(0.25rem, 5vw, 1rem);
     width: $container-width;
     background-color: white;
@@ -88,19 +92,17 @@
     input {
       width: 100%;
       height: 2.5rem;
-      padding-inline: 1.25rem;
+      padding-inline: 2.5rem;
       box-shadow: $add-task-shadow;
       border-radius: $add-task-radius;
     }
 
     button {
-      aspect-ratio: 1;
-      width: 1rem;
-      height: 1rem;
-      padding: 1.25rem;
-      box-shadow: $add-task-shadow;
-      border-radius: $add-task-radius;
-      background: url(./add.svg) no-repeat center;
+      position: absolute;
+      left: 0;
+      width: 1.35rem;
+      margin-left: 0.5rem;
+      margin-block: auto;
     }
   }
 

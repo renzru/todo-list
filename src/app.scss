@@ -169,3 +169,16 @@ body {
 .bg-white {
     background-color: var(--bg-white);
 }
+
+/* Components */
+
+.add-task-btn {
+    aspect-ratio: 1;
+    opacity: 0.25;
+    transition: opacity 0.25s ease;
+    background: url(./add.svg) no-repeat center;
+
+    &:hover {
+        opacity: 0.75;
+    }
+}
