@@ -4,8 +4,9 @@
   import { newTaskOBJ } from './TaskOBJ';
 
   import { createEventDispatcher } from 'svelte';
-  import { quartOut } from 'svelte/easing';
   import { fly, fade } from 'svelte/transition';
+  import { quartOut } from 'svelte/easing';
+  import { Animate } from './Animate';
   import { onMount } from 'svelte';
 
   export let currentMeta: TaskOBJ;
@@ -52,10 +53,16 @@
     <textarea placeholder="Notes...✏️" bind:value={temp.notes} />
 
     <!-- Edit Task Priority -->
-    <h2 class="fs-500">Priority</h2>
+    <span class="flex">
+      <h2 class="fs-500">Priority</h2>
+      <div
+        class="priority-preview"
+        style="background-color: {Animate.swapPriority(temp.priority)};"
+      />
+    </span>
     <select bind:value={temp.priority}>
       <option value="None">None</option>
-      <option value="Normal">Normal</option>
+      <option value="Normal"> Normal </option>
       <option value="Important">Important</option>
       <option value="Urgent">Urgent</option>
     </select>
@@ -65,6 +72,18 @@
 <div class="backdrop" transition:fade={{ duration: 400, easing: quartOut }} />
 
 <style lang="scss">
+  span.flex {
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .priority-preview {
+    aspect-ratio: 1;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 100%;
+    transition: background 0.25s ease;
+  }
   .backdrop {
     content: '';
     position: fixed;
