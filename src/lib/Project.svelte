@@ -44,7 +44,7 @@
       type="text"
       placeholder="Untitled..."
     />
-    <button class="add-task-btn" on:click={addTask}>+</button>
+    <button class="add-task-btn" on:click={addTask} />
   </div>
 
   <!-- Tasks -->
@@ -75,7 +75,6 @@
       }
 
       button {
-        padding: 0;
         height: 60%;
       }
     }
