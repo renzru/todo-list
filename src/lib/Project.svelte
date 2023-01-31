@@ -70,6 +70,10 @@
       padding-bottom: 2rem;
       border-bottom: 2px solid var(--bg-light);
 
+      input {
+        width: 100%;
+      }
+
       button {
         padding: 0;
         height: 60%;
