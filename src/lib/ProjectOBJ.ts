@@ -1,5 +1,6 @@
 export type ProjectOBJ = {
     title: string,
-    list: Array
+    list: Array,
+    id: string
 } 
 

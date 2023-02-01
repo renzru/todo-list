@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Project from './Project.svelte';
   import type { ProjectOBJ } from './ProjectOBJ';
   import { newTaskOBJ, TaskOBJ } from './TaskOBJ';
   import { createEventDispatcher } from 'svelte';
@@ -9,6 +10,7 @@
   export let project: ProjectOBJ = {
     title: 'Home ',
     list: [],
+    id: (Math.random() * Date.now()).toString(32).substring(0, 8),
   };
 
   let currentMeta: TaskOBJ;
@@ -24,6 +26,9 @@
     project.list = project.list.filter((task) => task.id !== event.detail);
   }
 
+  function clearTasks() {
+    project.list = [];
+  }
   function showModal(event) {
     show = !show;
     currentMeta = event.detail;
@@ -49,8 +54,8 @@
     <!-- Edit Project Modal -->
     <ul class="edit-project-modal fs-default flow grid bg-white">
       <li class="list-style-1">Rename</li>
-      <li class="list-style-1">Clear</li>
-      <li class="list-style-1">Delete</li>
+      <li class="list-style-1" on:click={clearTasks}>Clear</li>
+      <li class="list-style-1" on:click={dispatch('deleteProject', project.id)}>Delete</li>
     </ul>
   </div>
 
