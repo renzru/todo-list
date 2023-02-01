@@ -59,6 +59,7 @@
   <section class="flow">
     <Project on:editProject={refreshStore} bind:project />
 
+    <button on:click={addProject}> addproject</button>
     <!-- Add Task -->
     <div class="add-task-container flex">
       <!-- Button -->
@@ -68,10 +69,9 @@
       <input
         bind:value={temp.title}
         on:keydown={handleKey}
-        placeholder="Add Task"
         class="add-task-input text-input"
-        type="text"
-      />
+        placeholder="Add Task"
+        type="text" />
     </div>
   </section>
 </main>

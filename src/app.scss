@@ -66,6 +66,7 @@ a {
 
 ul,
 li {
+    padding: unset;
     list-style-type: none;
 }
 
@@ -121,7 +122,7 @@ body {
 }
 
 .flow>*+* {
-    margin-top: 1rem;
+    margin-top: var(--flow-margin, 1rem);
 }
 
 .thin {
@@ -180,5 +181,25 @@ body {
 
     &:hover {
         opacity: 0.75;
+    }
+}
+
+.list-style-1 {
+    width: 100%;
+    position: relative;
+
+    &:hover {
+        background-color: #f7f8ff;
+        cursor: pointer;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            background-color: #e0e3f7;
+            left: 0;
+            top: 0;
+        }
     }
 }

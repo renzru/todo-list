@@ -5,14 +5,17 @@
   import Modal from './Modal.svelte';
   import Task from './Task.svelte';
 
+  export let temp = newTaskOBJ();
   export let project: ProjectOBJ = {
     title: 'Home ',
     list: [],
   };
 
+  let currentMeta: TaskOBJ;
+  let show: boolean = false;
+
   const dispatch = createEventDispatcher();
 
-  export let temp = newTaskOBJ();
   function addTask() {
     project.list = [...project.list, newTaskOBJ()];
   }
@@ -20,9 +23,6 @@
   function removeTask(event) {
     project.list = project.list.filter((task) => task.id !== event.detail);
   }
-
-  let currentMeta: TaskOBJ;
-  let show: boolean = false;
 
   function showModal(event) {
     show = !show;
@@ -37,14 +37,21 @@
 <section class="project grid">
   <!-- Project Header -->
   <div class="project-header flex">
+    <!-- Project Title -->
     <input
       class="fs-600 medium text-input"
       on:change={dispatch('editProject', project)}
       bind:value={project.title}
       type="text"
-      placeholder="Untitled..."
-    />
+      placeholder="Untitled..." />
+    <!-- Add Task Button -->
     <button class="add-task-btn" on:click={addTask} />
+    <!-- Edit Project Modal -->
+    <ul class="edit-project-modal fs-default flow grid bg-white">
+      <li class="list-style-1">Rename</li>
+      <li class="list-style-1">Clear</li>
+      <li class="list-style-1">Delete</li>
+    </ul>
   </div>
 
   <!-- Tasks -->
@@ -58,18 +65,35 @@
 {/if}
 
 <style lang="scss">
+  // TODO: Add clear all tasks button and delete project button
+
   .project {
     grid-auto-rows: min-content;
     justify-self: center;
     gap: 0.2rem;
 
     &-header {
-      align-items: center;
+      position: relative;
       justify-content: space-between;
-      margin-block: 3rem 2rem;
+      align-items: center;
       padding-bottom: 2rem;
+      margin-block: 3rem 2rem;
       border-bottom: 2px solid var(--bg-light);
 
+      .edit-project-modal {
+        --flow-margin: 0.25rem;
+        position: absolute;
+        right: 0;
+        justify-items: left;
+        padding-block: 1rem;
+        grid-auto-rows: min-content;
+        border-radius: 0.3rem;
+        box-shadow: 0 0 1px rgb(0, 0, 0, 0.65);
+
+        li {
+          padding-inline: 0.5rem 4rem;
+        }
+      }
       input {
         width: 100%;
       }
