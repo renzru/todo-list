@@ -22,14 +22,15 @@
       (store) => (store = store.filter((_project) => _project.id !== project.id)),
     );
 
-    replaceProject(index);
+    findReplacement(index);
   }
 
-  function replaceProject(index: number): void {
-    const validReplacement: ProjectOBJ = projectStorage[index - 1] || projectStorage[0];
+  // Finds a project to display in place of the last deleted projec
+  function findReplacement(index: number): void {
+    const replacement: ProjectOBJ = projectStorage[index - 1] || projectStorage[0];
 
-    if (validReplacement) {
-      dispatch('replaceProject', validReplacement);
+    if (replacement) {
+      dispatch('replaceProject', replacement);
     } else {
       dispatch('noProjects');
     }
@@ -55,13 +56,13 @@
     project.list = [];
   }
 
+  function refreshList(): void {
+    project.list = project.list;
+  }
+
   function showModal(event): void {
     show = !show;
     selectedTask = event.detail;
-  }
-
-  function refreshList(): void {
-    project.list = project.list;
   }
 </script>
 

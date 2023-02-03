@@ -18,7 +18,7 @@
     projectStore.update((store) => (store = [...store, project]));
   }
 
-  function switchProject(event): void {
+  function reloadDisplay(event): void {
     isDefault = false;
     project = event.detail;
   }
@@ -29,7 +29,7 @@
 </script>
 
 <!-- Sidebar -->
-<Sidebar on:switchProject={switchProject} bind:projectStorage />
+<Sidebar on:switchProject={reloadDisplay} bind:projectStorage />
 
 <!-- Main Grid -->
 <main class="grid">
@@ -42,11 +42,11 @@
         bind:project
         bind:projectStorage
         on:editProject={refreshStore}
-        on:replaceProject={switchProject}
+        on:replaceProject={reloadDisplay}
         on:noProjects={() => (isDefault = true)} />
       <Taskbar bind:project />
-      <button on:click={addProject}> addproject</button>
     {/if}
+    <button on:click={addProject}> addproject</button>
   </section>
 </main>
 <button on:click={addProject} />
