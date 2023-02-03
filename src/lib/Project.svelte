@@ -4,13 +4,42 @@
   import { createEventDispatcher } from 'svelte';
   import Modal from './Modal.svelte';
   import Task from './Task.svelte';
+  import { projectStore } from './store';
 
   export let project: ProjectOBJ = newProjectOBJ();
-
+  export let projectStorage: Array<ProjectOBJ>;
   let selectedTask: TaskOBJ;
   let show: boolean = false;
 
   const dispatch = createEventDispatcher();
+
+  projectStore.subscribe((store) => (projectStorage = store));
+
+  function deleteProject(): void {
+    const index: number = getProjectIndex(project.id);
+
+    projectStore.update(
+      (store) => (store = store.filter((_project) => _project.id !== project.id)),
+    );
+
+    replaceProject(index);
+  }
+
+  function replaceProject(index: number): void {
+    const validReplacement: ProjectOBJ = projectStorage[index - 1] || projectStorage[0];
+
+    if (validReplacement) {
+      dispatch('replaceProject', validReplacement);
+    } else {
+      dispatch('noProjects');
+    }
+  }
+
+  function getProjectIndex(targetID: string): number {
+    const index: number = projectStorage.findIndex((_project) => _project.id === targetID);
+
+    return index;
+  }
 
   function addTask(): void {
     project.list = [...project.list, newTaskOBJ()];
@@ -31,7 +60,7 @@
     selectedTask = event.detail;
   }
 
-  function refresh(): void {
+  function refreshList(): void {
     project.list = project.list;
   }
 </script>
@@ -42,7 +71,7 @@
     <!-- Project Title -->
     <input
       class="fs-600 medium text-input"
-      on:change={() => dispatch('editProject', project)}
+      on:change={() => dispatch('editProject')}
       bind:value={project.title}
       type="text"
       placeholder="Untitled..." />
@@ -52,7 +81,7 @@
     <ul class="edit-project-modal fs-default flow grid bg-white">
       <li class="list-style-1">Rename</li>
       <li class="list-style-1" on:click={clearTasks}>Clear</li>
-      <li class="list-style-1" on:click={() => dispatch('deleteProject', project.id)}>Delete</li>
+      <li class="list-style-1" on:click={deleteProject}>Delete</li>
     </ul>
   </div>
 
@@ -63,7 +92,7 @@
 </section>
 
 {#if show}
-  <Modal bind:selectedTask bind:show {project} on:save={refresh} />
+  <Modal bind:selectedTask bind:show {project} on:save={refreshList} />
 {/if}
 
 <style lang="scss">
