@@ -1,18 +1,13 @@
 <script lang="ts">
-  import type { ProjectOBJ } from './ProjectOBJ';
+  import { newProjectOBJ, ProjectOBJ } from './ProjectOBJ';
   import { newTaskOBJ, TaskOBJ } from './TaskOBJ';
   import { createEventDispatcher } from 'svelte';
   import Modal from './Modal.svelte';
   import Task from './Task.svelte';
 
-  export let temp = newTaskOBJ();
-  export let project: ProjectOBJ = {
-    title: 'Home ',
-    list: [],
-    id: (Math.random() * Date.now()).toString(32).substring(0, 8),
-  };
+  export let project: ProjectOBJ = newProjectOBJ();
 
-  let currentMeta: TaskOBJ;
+  let selectedTask: TaskOBJ;
   let show: boolean = false;
 
   const dispatch = createEventDispatcher();
@@ -30,9 +25,10 @@
   function clearTasks(): void {
     project.list = [];
   }
+
   function showModal(event): void {
     show = !show;
-    currentMeta = event.detail;
+    selectedTask = event.detail;
   }
 
   function refresh(): void {
@@ -46,7 +42,7 @@
     <!-- Project Title -->
     <input
       class="fs-600 medium text-input"
-      on:change={dispatch('editProject', project)}
+      on:change={() => dispatch('editProject', project)}
       bind:value={project.title}
       type="text"
       placeholder="Untitled..." />
@@ -56,18 +52,18 @@
     <ul class="edit-project-modal fs-default flow grid bg-white">
       <li class="list-style-1">Rename</li>
       <li class="list-style-1" on:click={clearTasks}>Clear</li>
-      <li class="list-style-1" on:click={dispatch('deleteProject', project.id)}>Delete</li>
+      <li class="list-style-1" on:click={() => dispatch('deleteProject', project.id)}>Delete</li>
     </ul>
   </div>
 
   <!-- Tasks -->
   {#each project.list as task}
-    <Task {project} bind:meta={task} on:remove={removeTask} on:showModal={showModal} />
+    <Task bind:task on:remove={removeTask} on:showModal={showModal} />
   {/each}
 </section>
 
 {#if show}
-  <Modal bind:currentMeta bind:show {project} on:save={refresh} />
+  <Modal bind:selectedTask bind:show {project} on:save={refresh} />
 {/if}
 
 <style lang="scss">

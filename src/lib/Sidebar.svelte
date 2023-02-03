@@ -1,8 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import { ProjectOBJ } from './ProjectOBJ';
   import { fly } from 'svelte/transition';
 
-  export let projectStorage: object;
+  export let projectStorage: Array<ProjectOBJ>;
   const dispatch = createEventDispatcher();
 </script>
 
@@ -21,10 +22,11 @@
         <li
           class="fs-default list-style-1"
           in:fly={{ y: 20, duration: 350 }}
-          on:click={() => dispatch('loadTask', project)}>
+          on:click={() => dispatch('switchProject', project)}>
           {#if project.title === ''}
-            <span in:fly={{ y: 20, duration: 350 }} style="color: var(--clr-light)"
-              >Untitled...</span>
+            <span in:fly={{ y: 20, duration: 350 }} style="color: var(--clr-light)">
+              Untitled...
+            </span>
           {:else}
             <span in:fly={{ y: 20, duration: 350 }}>{project.title}</span>
           {/if}

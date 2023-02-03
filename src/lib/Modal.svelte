@@ -6,37 +6,54 @@
   import { createEventDispatcher } from 'svelte';
   import { fly, fade } from 'svelte/transition';
   import { quartOut } from 'svelte/easing';
-  import { Animate } from './Animate';
   import { onMount } from 'svelte';
+  import { getPriorityColor } from './Update';
 
-  export let currentMeta: TaskOBJ;
-  export let show: boolean;
+  export let selectedTask: TaskOBJ;
   export let project: ProjectOBJ;
+  export let show: boolean;
 
   const temp: TaskOBJ = newTaskOBJ();
   let dispatch = createEventDispatcher();
 
+  let modal;
   onMount(() => {
     for (let property in temp) {
-      temp[property] = currentMeta[property];
+      temp[property] = selectedTask[property];
     }
   });
 
+  function handleKey(event) {
+    switch (event.key) {
+      case 'Enter':
+        save();
+        break;
+      case 'Escape':
+        cancel();
+        break;
+    }
+  }
+
+  function cancel() {
+    show = false;
+  }
+
   function save() {
-    for (let property in currentMeta) {
-      currentMeta[property] = temp[property];
+    for (let property in selectedTask) {
+      selectedTask[property] = temp[property];
     }
     show = false;
     dispatch('save');
   }
 </script>
 
+<svelte:window on:keydown={handleKey} />
 <div
   class="modal flow grid bg-white"
   transition:fly={{ x: 800, opacity: 1, duration: 500, easing: quartOut }}>
   <!-- Action Buttons -->
   <div class="modal-buttons">
-    <button class="modal-cancel text-light" on:click={() => (show = false)}>Cancel</button>
+    <button class="modal-cancel text-light" on:click={cancel}>Cancel</button>
     <button class="modal-save" on:click={save}>Save</button>
   </div>
 
@@ -54,9 +71,7 @@
     <!-- Edit Task Priority -->
     <span class="flex">
       <h2 class="fs-500">Priority</h2>
-      <div
-        class="priority-preview"
-        style="background-color: {Animate.swapPriority(temp.priority)};" />
+      <div class="priority-preview" style="background-color: {getPriorityColor(temp.priority)};" />
     </span>
     <select bind:value={temp.priority}>
       <option value="None">None</option>
@@ -67,7 +82,7 @@
   </div>
 </div>
 <!-- Backdrop for Contrast -->
-<div class="backdrop" transition:fade={{ duration: 400, easing: quartOut }} />
+<div class="backdrop" on:click={cancel} transition:fade={{ duration: 400, easing: quartOut }} />
 
 <style lang="scss">
   span.flex {

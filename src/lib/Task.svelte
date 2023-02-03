@@ -1,39 +1,55 @@
 <script lang="ts">
-  import type { ProjectOBJ } from './ProjectOBJ';
   import type { TaskOBJ } from './TaskOBJ';
 
   import { createEventDispatcher } from 'svelte';
   import { fly, fade } from 'svelte/transition';
-  import { Animate } from './Animate';
+  import { getPriorityColor } from './Update';
 
-  export let project: ProjectOBJ;
-  export let meta: TaskOBJ;
+  export let task: TaskOBJ;
 
   let dispatch = createEventDispatcher();
 
-  $: priorityColor = Animate.swapPriority(meta.priority);
+  $: priorityColor = getPriorityColor(task.priority);
+
+  function handleKey(event): void {
+    if (event.key === 'Escape') {
+      event.srcElement.blur();
+      dispatch('showModal', task);
+    }
+
+    switch (event.key) {
+      case 'Escape':
+        event.srcElement.blur();
+        dispatch('showModal', task);
+        break;
+      case 'Delete':
+        dispatch('remove', task.id);
+    }
+  }
 </script>
 
 <li class="task flex" in:fly={{ x: -100, y: 50, duration: 450 }}>
   <!-- isDone Checkbox -->
-  <input bind:checked={meta.isDone} on:change={() => dispatch('remove', meta.id)} type="checkbox" />
+  <input bind:checked={task.isDone} on:change={() => dispatch('remove', task.id)} type="checkbox" />
 
   <!-- Title  -->
-  <input bind:value={meta.title} class="fs-500 text-input" type="text" placeholder="New Task..." />
+  <input
+    bind:value={task.title}
+    on:keyup={handleKey}
+    class="fs-500 text-input"
+    placeholder="New Task..."
+    type="text" />
 
   <!-- Priority -->
-  {#key meta.priority}
+  {#key task.priority}
     <div
       class="priority fs-500"
       style="background-color: {priorityColor}"
-      transition:fade={{ duration: 300 }}
-    />
+      transition:fade={{ duration: 300 }} />
   {/key}
 
-  <!-- Remove Button
-  <button on:click={() => dispatch('remove', meta.id)}>X</button> -->
   <!-- Edit Button -->
-  <img on:click={() => dispatch('showModal', meta)} class="edit" src="./edit.svg" alt="Edit Task" />
+  <img on:click={() => dispatch('showModal', task)} class="edit" src="./edit.svg" alt="Edit Task" />
 </li>
 
 <style lang="scss">
