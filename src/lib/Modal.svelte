@@ -33,8 +33,7 @@
 
 <div
   class="modal flow grid bg-white"
-  transition:fly={{ x: 800, opacity: 1, duration: 500, easing: quartOut }}
->
+  transition:fly={{ x: 800, opacity: 1, duration: 500, easing: quartOut }}>
   <!-- Action Buttons -->
   <div class="modal-buttons">
     <button class="modal-cancel text-light" on:click={() => (show = false)}>Cancel</button>
@@ -57,8 +56,7 @@
       <h2 class="fs-500">Priority</h2>
       <div
         class="priority-preview"
-        style="background-color: {Animate.swapPriority(temp.priority)};"
-      />
+        style="background-color: {Animate.swapPriority(temp.priority)};" />
     </span>
     <select bind:value={temp.priority}>
       <option value="None">None</option>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Project from './Project.svelte';
   import type { ProjectOBJ } from './ProjectOBJ';
   import { newTaskOBJ, TaskOBJ } from './TaskOBJ';
   import { createEventDispatcher } from 'svelte';
@@ -18,23 +17,25 @@
 
   const dispatch = createEventDispatcher();
 
-  function addTask() {
+  function addTask(): void {
     project.list = [...project.list, newTaskOBJ()];
   }
 
-  function removeTask(event) {
-    project.list = project.list.filter((task) => task.id !== event.detail);
+  function removeTask(event): void {
+    const taskID: string = event.detail;
+
+    project.list = project.list.filter((task) => task.id !== taskID);
   }
 
-  function clearTasks() {
+  function clearTasks(): void {
     project.list = [];
   }
-  function showModal(event) {
+  function showModal(event): void {
     show = !show;
     currentMeta = event.detail;
   }
 
-  function refresh() {
+  function refresh(): void {
     project.list = project.list;
   }
 </script>

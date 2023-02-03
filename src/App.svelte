@@ -4,48 +4,74 @@
   import Sidebar from './lib/Sidebar.svelte';
   import Project from './lib/Project.svelte';
   import { newTaskOBJ, TaskOBJ } from './lib/TaskOBJ';
+  import Default from './lib/Default.svelte';
 
   let project: ProjectOBJ;
-  let projectStorage: object;
+  let projectStorage: Array<ProjectOBJ>;
+  let isDefault: boolean = false;
+
   const temp: TaskOBJ = newTaskOBJ();
 
   projectStore.subscribe((store) => (projectStorage = store));
 
-  function addProject() {
+  function addProject(): void {
     const project: ProjectOBJ = {
       title: '',
       list: [],
+      id: (Math.random() * Date.now()).toString(32).substring(0, 8),
     };
 
     projectStore.update((store) => (store = [...store, project]));
   }
 
-  function handleKey(event) {
-    switch (event.key) {
-      case 'Enter':
-        addTask();
-        break;
-      default:
-        return;
+  function handleKey(event): void {
+    if (event.key === 'Enter') {
+      addTask();
     }
   }
 
-  function addTask() {
+  function addTask(): void {
     const _temp: TaskOBJ = newTaskOBJ();
     _temp.title = temp.title;
+
     project.list = [...project.list, _temp];
   }
 
-  function switchProject(event) {
-    project = event.detail;
+  function switchProject(event): void {
+    const selectedProject: ProjectOBJ = event.detail;
+    isDefault = false;
+
+    project = selectedProject;
+  }
+
+  function deleteProject(event): void {
+    const projectID: string = event.detail;
+    const index: number = getProjectIndex(projectID);
+
+    projectStore.update((store) => (store = store.filter((project) => project.id !== projectID)));
+    replaceProject(index);
+  }
+
+  function replaceProject(index: number): void {
+    const validReplacement: ProjectOBJ = projectStorage[index - 1] || projectStorage[0];
+
+    if (validReplacement) {
+      switchProject({ detail: validReplacement });
+    } else {
+      isDefault = true;
+    }
+  }
+
+  function getProjectIndex(targetID: string): number {
+    const index: number = projectStorage.findIndex((project) => project.id === targetID);
+
+    return index;
   }
 
   // TODO: Fix buggy animations on project switch;
   // TODO: Fix inconsistent box shadows on zoom;
 
-  function refreshStore() {
-    // #each blocks don't update on mutation, only on reassignment.
-    // This has to be done so the sidebar refreshes on project title edit.
+  function refreshStore(): void {
     projectStore.update((store) => (store = store));
   }
 </script>
@@ -57,22 +83,25 @@
 <main class="grid">
   <!-- Project -->
   <section class="flow">
-    <Project on:editProject={refreshStore} bind:project />
+    {#if isDefault}
+      <Default />
+    {:else}
+      <Project on:editProject={refreshStore} on:deleteProject={deleteProject} bind:project />
+      <button on:click={addProject}> addproject</button>
+      <!-- Add Task -->
+      <div class="add-task-container flex">
+        <!-- Button -->
 
-    <button on:click={addProject}> addproject</button>
-    <!-- Add Task -->
-    <div class="add-task-container flex">
-      <!-- Button -->
-
-      <button class="add-task-btn" on:click={addTask} />
-      <!-- Text Input -->
-      <input
-        bind:value={temp.title}
-        on:keydown={handleKey}
-        class="add-task-input text-input"
-        placeholder="Add Task"
-        type="text" />
-    </div>
+        <button class="add-task-btn" on:click={addTask} />
+        <!-- Text Input -->
+        <input
+          bind:value={temp.title}
+          on:keydown={handleKey}
+          class="add-task-input text-input"
+          placeholder="Add Task"
+          type="text" />
+      </div>
+    {/if}
   </section>
 </main>
 <button on:click={addProject} />
