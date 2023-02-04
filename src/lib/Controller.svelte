@@ -3,11 +3,14 @@
   import { projectStore } from './store';
   import Sidebar from './Sidebar.svelte';
   import Project from './Project.svelte';
+  import ProjectModal from './ProjectModal.svelte';
   import Default from './Default.svelte';
   import Taskbar from './Taskbar.svelte';
 
   let project: ProjectOBJ;
   let projectStorage: Array<ProjectOBJ>;
+
+  let showProjectModal: boolean = false;
   let isDefault: boolean = false;
 
   projectStore.subscribe((store) => (projectStorage = store));
@@ -20,7 +23,9 @@
 
   function reloadDisplay(event): void {
     isDefault = false;
-    project = event.detail;
+    showProjectModal = false;
+
+    project = event.detail || event;
   }
 
   function refreshStore(): void {
@@ -36,20 +41,25 @@
   <!-- Project -->
   <section class="flow">
     {#if isDefault}
+      <!-- Default Page  -->
       <Default />
     {:else}
-      <Project
-        bind:project
-        bind:projectStorage
-        on:editProject={refreshStore}
-        on:replaceProject={reloadDisplay}
-        on:noProjects={() => (isDefault = true)} />
+      <!-- Project Display -->
+      <Project bind:project bind:projectStorage bind:showProjectModal on:editProject={refreshStore}>
+        <ProjectModal
+          slot="edit-project-modal"
+          bind:isDefault
+          bind:project
+          bind:projectStorage
+          on:replaceProject={reloadDisplay} />
+      </Project>
       <Taskbar bind:project />
     {/if}
+    <!-- Add Project Button -->
     <button on:click={addProject}> addproject</button>
   </section>
+  <!-- Edit Project Modal -->
 </main>
-<button on:click={addProject} />
 
 <style lang="scss">
   main {
