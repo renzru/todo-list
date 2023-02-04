@@ -3,38 +3,60 @@
 
   import { createEventDispatcher } from 'svelte';
   import { fly, fade } from 'svelte/transition';
-  import { getPriorityColor } from './Update';
+  import { getPriorityColor, refreshStore } from './Update';
+  import { format } from 'date-fns';
 
   export let task: TaskOBJ;
 
   let dispatch = createEventDispatcher();
 
   $: priorityColor = getPriorityColor(task.priority);
+  $: formattedDate = getDueDate(task.duedate);
 
+  // Handles keypresses for accessibility
   function handleKey(event): void {
+    // Shows Edit Task Modal on Escape
     if (event.key === 'Escape') {
       event.srcElement.blur();
       dispatch('showModal', task);
     }
 
     switch (event.key) {
+      // Shows Edit Task Modal on Enter
       case 'Escape':
         event.srcElement.blur();
         dispatch('showModal', task);
         break;
+
+      // Removes task on Delete
       case 'Delete':
         dispatch('remove', task.id);
     }
   }
+
+  /*
+    Returns a custom-formatted date string.
+    returns 'Today' if task is due today
+  */
+  function getDueDate(date: string): string {
+    if (date === 'None') {
+      return 'None';
+    } else if (format(new Date(date), 'P') === format(new Date(), 'P')) {
+      return 'Today';
+    } else {
+      return format(new Date(date), 'MMMM d');
+    }
+  }
 </script>
 
-<li class="task flex" in:fly={{ x: -100, y: 50, duration: 450 }}>
+<li class="task flex" in:fly={{ y: 50, duration: 450 }}>
   <!-- isDone Checkbox -->
   <input bind:checked={task.isDone} on:change={() => dispatch('remove', task.id)} type="checkbox" />
 
   <!-- Title  -->
   <input
     bind:value={task.title}
+    on:change={refreshStore}
     on:keyup={handleKey}
     class="fs-500 text-input"
     placeholder="New Task..."
@@ -47,6 +69,13 @@
       style="background-color: {priorityColor}"
       transition:fade={{ duration: 300 }} />
   {/key}
+
+  <!-- Due Date -->
+  {#if formattedDate !== 'None'}
+    {#key formattedDate}
+      <p class="due-date fs-default">{formattedDate}</p>
+    {/key}
+  {/if}
 
   <!-- Edit Button -->
   <img on:click={() => dispatch('showModal', task)} class="edit" src="./edit.svg" alt="Edit Task" />
@@ -84,16 +113,18 @@
       width: 100%;
     }
 
-    div {
-      &.priority {
-        position: absolute;
-        left: 0;
-        z-index: -1;
-        width: clamp(1.35rem, 1%, 3rem);
-        height: 100%;
-        border-radius: 0.2rem 0 0 0.2rem;
-        background-color: var(--priority-default);
-      }
+    .priority {
+      position: absolute;
+      left: 0;
+      z-index: -1;
+      width: clamp(1.35rem, 1%, 3rem);
+      height: 100%;
+      border-radius: 0.2rem 0 0 0.2rem;
+      background-color: var(--priority-default);
+    }
+
+    .due-date {
+      white-space: nowrap;
     }
   }
 </style>

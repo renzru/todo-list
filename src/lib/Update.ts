@@ -1,3 +1,4 @@
+import {projectStore} from './store'
 
 function getPriorityColor(priority: string): string {
     const priorities = {
@@ -9,4 +10,8 @@ function getPriorityColor(priority: string): string {
       return priorities[priority] || 'var(--priority-default)';
 }
 
-export {getPriorityColor}
+function refreshStore() {
+  projectStore.update((store) => (store = store));
+}
+
+export {getPriorityColor, refreshStore}

@@ -16,7 +16,6 @@
     const _temp: TaskOBJ = newTaskOBJ();
     _temp.title = temp.title.trim();
 
-    console.log(project);
     project.list = [...project.list, _temp];
   }
 </script>

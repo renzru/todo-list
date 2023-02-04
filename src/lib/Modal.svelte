@@ -7,7 +7,8 @@
   import { fly, fade } from 'svelte/transition';
   import { quartOut } from 'svelte/easing';
   import { onMount } from 'svelte';
-  import { getPriorityColor } from './Update';
+  import { getPriorityColor, refreshStore } from './Update';
+  import { projectStore } from './store';
 
   export let selectedTask: TaskOBJ;
   export let project: ProjectOBJ;
@@ -16,7 +17,6 @@
   const temp: TaskOBJ = newTaskOBJ();
   let dispatch = createEventDispatcher();
 
-  let modal;
   onMount(() => {
     for (let property in temp) {
       temp[property] = selectedTask[property];
@@ -43,6 +43,7 @@
       selectedTask[property] = temp[property];
     }
     show = false;
+    refreshStore();
     dispatch('save');
   }
 </script>
@@ -57,12 +58,12 @@
     <button class="modal-save" on:click={save}>Save</button>
   </div>
 
-  <div>
+  <div class="flow-input">
     <!-- Directory Text -->
     <span class="text-light">Projects\ {project.title}</span>
 
     <!-- Edit Task Title -->
-    <textarea bind:value={temp.title} class="fs-900" />
+    <input bind:value={temp.title} placeholder="Title..." class="fs-900 text-input" />
 
     <!-- Edit Task Notes -->
     <h1 class="fs-500">Notes</h1>
@@ -79,12 +80,22 @@
       <option value="Important">Important</option>
       <option value="Urgent">Urgent</option>
     </select>
+
+    <h1 class="fs-500">Due Date</h1>
+    <!-- Edit Task Due Date -->
+    <input type="date" class="text-input" bind:value={temp.duedate} />
   </div>
 </div>
 <!-- Backdrop for Contrast -->
 <div class="backdrop" on:click={cancel} transition:fade={{ duration: 400, easing: quartOut }} />
 
 <style lang="scss">
+  .flow-input input,
+  .flow-input textarea,
+  .flow-input select {
+    margin-bottom: var(--flow-margin, 2rem);
+  }
+
   span.flex {
     gap: 0.5rem;
     align-items: center;
